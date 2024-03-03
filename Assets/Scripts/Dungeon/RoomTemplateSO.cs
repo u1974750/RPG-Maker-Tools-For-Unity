@@ -1,5 +1,4 @@
-﻿using NG.Enumerations;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -41,7 +40,7 @@ namespace NG.Elements {
 
         #endregion Tooltip
 
-        public NGRoomType roomNodeType;
+        public RoomNodeTypeSO roomNodeType;
 
         #region Tooltip
 
