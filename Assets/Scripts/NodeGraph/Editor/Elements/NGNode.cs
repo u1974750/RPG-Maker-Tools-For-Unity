@@ -1,24 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace NG.Elements {
-    public class NGNode : Node
-    {
+    public class NGNode : Node {
         public string RoomName { get; set; }
         public List<string> Choices { get; set; }
+        public Image thumbnail {  get; set; }
 
 
-        public void Initialize(Vector2 position) {
+        public virtual void Initialize(Vector2 position) {
             RoomName = "RoomName";
             Choices = new List<string>();
-
+            thumbnail = new Image();
             SetPosition(new Rect(position, Vector2.zero));
         }
 
-        public void Draw() {
+        public virtual void Draw() {
 
             // TITLE CONTAINER
             TextField roomNameTextField = new TextField() {
@@ -28,9 +29,21 @@ namespace NG.Elements {
             titleContainer.Insert(0, roomNameTextField);
 
             //INPUT CONTAINER            
-            Port inputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, typeof(bool));//DIRECTION; SI ES INPUT O OUTPUT -- CAPACITY: si es pot conectar a un o mes nodes
-            inputPort.portName = "Previous Room";
-            inputContainer.Add(inputPort);
+            Port inputPort_N = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));//DIRECTION; SI ES INPUT O OUTPUT -- CAPACITY: si es pot conectar a un o mes nodes
+            inputPort_N.portName = "Previous Room - North";
+            inputContainer.Add(inputPort_N);
+
+            Port inputPort_S = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+            inputPort_S.portName = "Previous Room - South";
+            inputContainer.Add(inputPort_S);
+
+            Port inputPort_E = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+            inputPort_E.portName = "Previous Room - East";
+            inputContainer.Add(inputPort_E);
+
+            Port inputPort_W = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Single, typeof(bool));
+            inputPort_W.portName = "Previous Room - West";
+            inputContainer.Add(inputPort_W);
 
 
             //EXTENSION CONTAINER
@@ -44,12 +57,18 @@ namespace NG.Elements {
                 value = "this is my sample text"
             };
             textFoldout.Add(textTextField);
-
             customDataContainer.Add(textFoldout);
 
-            extensionContainer.Add(customDataContainer);
+            Image image = new Image() {
+                image = EditorGUIUtility.Load("node1") as Texture2D
+            };
+            customDataContainer.Add(image);
 
-            RefreshExpandedState();
+
+            extensionContainer.Add(customDataContainer);
+            
+
+           
         }
     }
 
