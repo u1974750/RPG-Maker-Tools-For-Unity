@@ -3,9 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum RoomOrientation {
-    Vertical,
-    Horizontal,
+    North,
+    South,
+    East,
+    West,
     none
 
+}
+
+public enum GameState {
+    gameStarted,
+    playingLevel
 }
 

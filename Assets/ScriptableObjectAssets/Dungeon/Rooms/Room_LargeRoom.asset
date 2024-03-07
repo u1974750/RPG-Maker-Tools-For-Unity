@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2708e4084c4a1534ba646096300f778c, type: 3}
-  m_Name: Room_SmallRoom
+  m_Name: Room_LargeRoom
   m_EditorClassIdentifier: 
-  guid: a9372c907088b434b9f39f16da0ea315
-  prefab: {fileID: 9096094311171308146, guid: 9373126e5dddc9641b7ce26ac6c7978c, type: 3}
-  previousPrefab: {fileID: 9096094311171308146, guid: 9373126e5dddc9641b7ce26ac6c7978c, type: 3}
-  roomNodeType: {fileID: 11400000, guid: 977ebd963d142ac4784568fa9711180a, type: 2}
-  lowerBounds: {x: -14, y: -3}
-  upperBounds: {x: 4, y: 15}
+  guid: 639afd1753adadd41b3940bf67c75406
+  prefab: {fileID: 9096094311171308146, guid: 3583c1af06f470348934e5505b4511d9, type: 3}
+  previousPrefab: {fileID: 9096094311171308146, guid: 3583c1af06f470348934e5505b4511d9, type: 3}
+  roomNodeType: {fileID: 11400000, guid: b13251ff4c34a00479ba22d000f694f7, type: 2}
+  lowerBounds: {x: -14, y: -19}
+  upperBounds: {x: 23, y: 15}
   doorwayList:
   - position: {x: -5, y: 15}
     orientation: 0
@@ -27,29 +27,28 @@ MonoBehaviour:
     doorwayCopyTileHeight: 6
     isConnected: 0
     isUnavailable: 0
-  - position: {x: 4, y: 6}
+  - position: {x: 23, y: 6}
     orientation: 2
     doorPrefab: {fileID: 0}
-    doorwayStartCopyPosition: {x: 1, y: 8}
+    doorwayStartCopyPosition: {x: 20, y: 8}
     doorwayCopyTileWidth: 4
     doorwayCopyTileHeight: 3
     isConnected: 0
     isUnavailable: 0
-  - position: {x: -5, y: -3}
+  - position: {x: 14, y: -19}
     orientation: 1
     doorPrefab: {fileID: 0}
-    doorwayStartCopyPosition: {x: -7, y: 0}
+    doorwayStartCopyPosition: {x: 12, y: -16}
     doorwayCopyTileWidth: 3
     doorwayCopyTileHeight: 4
     isConnected: 0
     isUnavailable: 0
-  - position: {x: -14, y: 6}
-    orientation: 3
+  - position: {x: -14, y: -10}
+    orientation: 2
     doorPrefab: {fileID: 0}
-    doorwayStartCopyPosition: {x: -14, y: 8}
+    doorwayStartCopyPosition: {x: -14, y: -8}
     doorwayCopyTileWidth: 4
     doorwayCopyTileHeight: 3
     isConnected: 0
     isUnavailable: 0
-  spawnPositionArray:
-  - {x: -5, y: 3}
+  spawnPositionArray: []
