@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum RoomOrientation {
-    North,
-    South,
-    East,
-    West,
+    north,
+    south,
+    east,
+    west,
     none
 
 }

@@ -1033,7 +1033,7 @@ GameObject:
   - component: {fileID: 4408163079703982702}
   m_Layer: 0
   m_Name: Tilemap0_Walls
-  m_TagString: groundTilemap
+  m_TagString: wallsTilemap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1342,6 +1342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2732709356615688382}
   - component: {fileID: 5431661368184836744}
+  - component: {fileID: 679691447463422108}
   m_Layer: 6
   m_Name: RoomTemplate
   m_TagString: Untagged
@@ -1412,3 +1413,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &679691447463422108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9096094311171308146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f2ae7989eaeed4a99383c88e498576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 0}
+  groundTilemap: {fileID: 0}
+  wallsTilemap: {fileID: 0}
+  decoration1Tilemap: {fileID: 0}
+  decoration2Tilemap: {fileID: 0}
+  frontTilemap: {fileID: 0}
+  collisionTilemap: {fileID: 0}
+  roomColliderBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}

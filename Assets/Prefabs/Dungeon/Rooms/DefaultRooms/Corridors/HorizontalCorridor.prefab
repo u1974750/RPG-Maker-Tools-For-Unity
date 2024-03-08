@@ -290,7 +290,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3978592746139658317}
   m_Enabled: 1
-  m_CellSize: {x: 0.16, y: 0.16, z: 0}
+  m_CellSize: {x: 1, y: 1, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
@@ -1612,48 +1612,112 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 1453037057319646733}
     m_ColliderPaths:
-    - - X: -1600000
-        Y: 20800000
-      - X: -4799999
-        Y: 20800000
-      - X: -4799999
-        Y: 9600000
-      - X: -1600000
-        Y: 9600000
-    - - X: -12799999
-        Y: 20800000
-      - X: -15999999
-        Y: 20800000
-      - X: -15999999
-        Y: 9600000
-      - X: -12799999
-        Y: 9600000
-    - - X: -1600000
-        Y: 9599999
-      - X: -4799999
-        Y: 9599999
-      - X: -4799999
-        Y: 4800000
-      - X: -1600000
-        Y: 4800000
-    - - X: -12799999
-        Y: 9599999
-      - X: -15999999
-        Y: 9599999
-      - X: -15999999
-        Y: 4800000
-      - X: -12799999
-        Y: 4800000
+    - - X: -10000017
+        Y: 90000000
+      - X: -10000015
+        Y: 90000000
+      - X: -10000018
+        Y: 100000000
+      - X: -10000020
+        Y: 110000000
+      - X: -10000019
+        Y: 110000000
+      - X: -10000021
+        Y: 120000000
+      - X: -10000024
+        Y: 130000000
+      - X: -30000024
+        Y: 130000000
+      - X: -30000022
+        Y: 120000000
+      - X: -30000024
+        Y: 120000000
+      - X: -30000022
+        Y: 110000000
+      - X: -30000020
+        Y: 110000000
+      - X: -30000020
+        Y: 100000000
+      - X: -30000016
+        Y: 90000000
+      - X: -30000014
+        Y: 90000000
+      - X: -30000014
+        Y: 80000000
+      - X: -10000014
+        Y: 80000000
+    - - X: -90000008
+        Y: 29999984
+      - X: -90000008
+        Y: 29999986
+      - X: -80000008
+        Y: 29999986
+      - X: -80000008
+        Y: 79999984
+      - X: -80000016
+        Y: 79999984
+      - X: -80000016
+        Y: 129999984
+      - X: -100000016
+        Y: 129999984
+      - X: -100000016
+        Y: 79999984
+      - X: -100000008
+        Y: 79999984
+      - X: -100000008
+        Y: 29999980
+    - - X: -10000005
+        Y: 29999998
+      - X: -10000007
+        Y: 40000000
+      - X: -10000010
+        Y: 49999996
+      - X: -10000008
+        Y: 49999996
+      - X: -10000011
+        Y: 59999996
+      - X: -10000013
+        Y: 69999992
+      - X: -10000012
+        Y: 69999992
+      - X: -10000014
+        Y: 79999992
+      - X: -20000014
+        Y: 79999992
+      - X: -20000012
+        Y: 69999992
+      - X: -20000014
+        Y: 69999992
+      - X: -20000014
+        Y: 79999992
+      - X: -30000014
+        Y: 79999992
+      - X: -30000014
+        Y: 69999992
+      - X: -30000012
+        Y: 59999996
+      - X: -30000010
+        Y: 59999996
+      - X: -30000010
+        Y: 49999996
+      - X: -30000008
+        Y: 39999996
+      - X: -30000010
+        Y: 39999996
+      - X: -30000008
+        Y: 29999996
+      - X: -20000004
+        Y: 29999996
   m_CompositePaths:
     m_Paths:
-    - - {x: -0.1600293, y: 0.48000002}
-      - {x: -0.1600293, y: 2.08}
-      - {x: -0.4799999, y: 2.0799708}
-      - {x: -0.4799706, y: 0.48000002}
-    - - {x: -1.2800292, y: 0.48000002}
-      - {x: -1.2800292, y: 2.08}
-      - {x: -1.5999999, y: 2.0799708}
-      - {x: -1.5999706, y: 0.48000002}
+    - - {x: -3.000001, y: 3.0000288}
+      - {x: -1.0000005, y: 3.0000293}
+      - {x: -1.0000317, y: 13}
+      - {x: -3.0000024, y: 12.99997}
+    - - {x: -10.000001, y: 3.0000272}
+      - {x: -8.000001, y: 3.0000281}
+      - {x: -8.000031, y: 12.999998}
+      - {x: -10.000002, y: 12.999969}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -1793,7 +1857,7 @@ GameObject:
   - component: {fileID: 4408163079703982702}
   m_Layer: 0
   m_Name: Tilemap0_Walls
-  m_TagString: groundTilemap
+  m_TagString: wallsTilemap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2302,6 +2366,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2732709356615688382}
   - component: {fileID: 5431661368184836744}
+  - component: {fileID: 976081418545593783}
   m_Layer: 6
   m_Name: HorizontalCorridor
   m_TagString: Untagged
@@ -2372,3 +2437,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1.6}
   m_EdgeRadius: 0
+--- !u!114 &976081418545593783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9096094311171308146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f2ae7989eaeed4a99383c88e498576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 0}
+  groundTilemap: {fileID: 0}
+  wallsTilemap: {fileID: 0}
+  decoration1Tilemap: {fileID: 0}
+  decoration2Tilemap: {fileID: 0}
+  frontTilemap: {fileID: 0}
+  collisionTilemap: {fileID: 0}
+  roomColliderBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}

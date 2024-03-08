@@ -80,8 +80,8 @@ public class DungeonLevelSO : ScriptableObject
                     }
                 }
 
+                if(!isRoomNodeTypeFound) Debug.LogWarning(" There is no Room Template found for the node graph"); // TREURE WARNING!!
             }
-            //Debug.LogWarning(" There is no Room TEmplate found for the node graph"); // TREURE WARNING!!
 
         }
     }

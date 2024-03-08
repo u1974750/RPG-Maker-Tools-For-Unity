@@ -290,7 +290,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3978592746139658317}
   m_Enabled: 1
-  m_CellSize: {x: 0.16, y: 0.16, z: 0}
+  m_CellSize: {x: 1, y: 1, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
@@ -1612,48 +1612,32 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 1453037057319646733}
     m_ColliderPaths:
-    - - X: -1600000
-        Y: 20800000
-      - X: -4799999
-        Y: 20800000
-      - X: -4799999
-        Y: 9600000
-      - X: -1600000
-        Y: 9600000
-    - - X: -12799999
-        Y: 20800000
-      - X: -15999999
-        Y: 20800000
-      - X: -15999999
-        Y: 9600000
-      - X: -12799999
-        Y: 9600000
-    - - X: -1600000
-        Y: 9599999
-      - X: -4799999
-        Y: 9599999
-      - X: -4799999
-        Y: 4800000
-      - X: -1600000
-        Y: 4800000
-    - - X: -12799999
-        Y: 9599999
-      - X: -15999999
-        Y: 9599999
-      - X: -15999999
-        Y: 4800000
-      - X: -12799999
-        Y: 4800000
+    - - X: -10000000
+        Y: 130000000
+      - X: -30000000
+        Y: 130000000
+      - X: -30000000
+        Y: 30000000
+      - X: -10000000
+        Y: 30000000
+    - - X: -80000000
+        Y: 130000000
+      - X: -100000000
+        Y: 130000000
+      - X: -100000000
+        Y: 30000000
+      - X: -80000000
+        Y: 30000000
   m_CompositePaths:
     m_Paths:
-    - - {x: -0.1600293, y: 0.48000002}
-      - {x: -0.1600293, y: 2.08}
-      - {x: -0.4799999, y: 2.0799708}
-      - {x: -0.4799706, y: 0.48000002}
-    - - {x: -1.2800292, y: 0.48000002}
-      - {x: -1.2800292, y: 2.08}
-      - {x: -1.5999999, y: 2.0799708}
-      - {x: -1.5999706, y: 0.48000002}
+    - - {x: -1.0000293, y: 3}
+      - {x: -1.0000293, y: 13}
+      - {x: -3, y: 12.99997}
+      - {x: -2.999971, y: 3}
+    - - {x: -8.00003, y: 3}
+      - {x: -8.00003, y: 13}
+      - {x: -10, y: 12.99997}
+      - {x: -9.99997, y: 3}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
@@ -1793,7 +1777,7 @@ GameObject:
   - component: {fileID: 4408163079703982702}
   m_Layer: 0
   m_Name: Tilemap0_Walls
-  m_TagString: groundTilemap
+  m_TagString: wallsTilemap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2302,6 +2286,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2732709356615688382}
   - component: {fileID: 5431661368184836744}
+  - component: {fileID: -8174512337094450767}
   m_Layer: 6
   m_Name: VerticalCorridor
   m_TagString: Untagged
@@ -2372,3 +2357,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1.6}
   m_EdgeRadius: 0
+--- !u!114 &-8174512337094450767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9096094311171308146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03f2ae7989eaeed4a99383c88e498576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 0}
+  groundTilemap: {fileID: 0}
+  wallsTilemap: {fileID: 0}
+  decoration1Tilemap: {fileID: 0}
+  decoration2Tilemap: {fileID: 0}
+  frontTilemap: {fileID: 0}
+  collisionTilemap: {fileID: 0}
+  roomColliderBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}

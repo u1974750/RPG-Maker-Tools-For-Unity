@@ -10,6 +10,7 @@ TagManager:
   - frontTilemap
   - roomTilemap
   - collisionTilemap
+  - wallsTilemap
   layers:
   - Default
   - TransparentFX
