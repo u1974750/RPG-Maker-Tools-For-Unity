@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Label text="This was created in UI Builder" />
+    <ui:Button text="This is Button1" icon-image="project://database/Assets/Misc/UnityDefaultRuntimeTheme.tss?fileID=6936960519852013934&amp;guid=3a4ba74df80dfaf44b94743e9f0c3fd5&amp;type=3#Remove" enable-rich-text="true" />
+    <ui:Toggle label="Number?" name="toggle1" style="justify-content: flex-start; align-self: auto; align-items: center;" />
+</ui:UXML>
