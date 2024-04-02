@@ -4,7 +4,10 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - m_VisualTreeAsset: {fileID: 9197481963319205126, guid: bc782eaac7307854c93b870ec8057575, type: 3}
+  - m_ViewDataDictionary: {instanceID: 0}
+  - _styleSheet: {fileID: 7433441132597879392, guid: 41ba2403f10f785498244a8eafab7a4b, type: 3}
+  - _imagePlaceholder: {fileID: 2800000, guid: 2bbde2860f7bda543a9ddf8d53c365fc, type: 3}
+  - _doorSprite: {fileID: 2800000, guid: 41dd7219956aa2a4fa28aa35af078978, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

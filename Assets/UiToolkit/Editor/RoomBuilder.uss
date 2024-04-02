@@ -1,10 +1,61 @@
-.custom-label {
+
+
+.main-title{
+    -unity-font-style: bold;    
+    -unity-text-align : middle-center;
+    margin-top: 5%;
     font-size: 20px;
-    -unity-font-style: bold;
     color: rgb(167, 159, 200);
 }
 
 .foldout-label {
     font-size: 13px;
     -unity-font-style: bold;
+}
+
+Toggle{
+     -unity-font-style: bold;
+      font-size: 18px;
+      margin-top: 5%;
+}
+
+TextElement{
+    font-size: 12px;
+}
+
+.tutorial-toggle{
+    align-self: center;
+    margin-top: 0%;
+    color: rgb(167, 159, 200);
+    font-size: 16px;
+}
+
+.room-prefab-image{
+    justify-content: center;
+    align-self: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-width: .5px;
+    width: 100%;
+}
+
+.room-placeholder-image{
+    justify-content: center;
+    align-self: center;
+    width: 50%;    
+    height: 20%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-width: .5px;
+    border-color: slategrey;
+}
+
+.doorways-box{
+    margin-top: 3%;
+    padding-bottom: 3%;
+    margin-right: 5%;
+    padding-left: 1%;
+    border-width: 1px;
+    border-radius: 5px;
+    border-color: white;
 }
