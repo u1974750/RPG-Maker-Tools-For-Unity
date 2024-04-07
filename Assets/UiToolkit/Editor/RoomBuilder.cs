@@ -4,6 +4,8 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
+using NG.Elements;
+using System.Linq;
 
 public class RoomBuilder : EditorWindow
 {
@@ -12,6 +14,8 @@ public class RoomBuilder : EditorWindow
     private VisualElement _root;
     private List<HelpBox> helpBoxes = new List<HelpBox>();
     private ScrollView _scrollView;
+    private Foldout _foldout;
+    private UnityEngine.Object _roomPrefab;
     [SerializeField] private StyleSheet _styleSheet;
     [SerializeField] private Texture2D _imagePlaceholder;
     [SerializeField] private Texture2D _doorSprite;
@@ -51,6 +55,39 @@ public class RoomBuilder : EditorWindow
         // FOLDOUT 2: ROOM TEMPLATE S.O.
         RoomTemplateFoldout();
 
+        //CREATE SCRIPTABLE OBJECT
+        Button createObjectButton = new Button(CreateAssetButtonAction) { text = "Create Room" };
+        _root.Add(createObjectButton);
+
+    }
+
+    private void CreateAssetButtonAction()
+    {
+        List<VisualElement> childrenList = _foldout.Children().ToList();
+
+        RoomTemplateSO newRoom = ScriptableObject.CreateInstance<RoomTemplateSO>();
+        TextField inputName = (TextField)childrenList[0];
+        string path = "Assets/ScriptableObjectAssets/Dungeon/Rooms/" + inputName.value + ".asset"; // change object name!
+
+        newRoom.prefab = (GameObject)_roomPrefab;
+
+        var roomTypeInput = (PopupField<RoomNodeTypeSO>)childrenList[2];
+        newRoom.roomNodeType = roomTypeInput.value;
+
+        Vector2IntField lowerBoundInput = (Vector2IntField) childrenList[4];
+        newRoom.lowerBounds = lowerBoundInput.value;
+
+        Vector2IntField upperBoundInput = (Vector2IntField) childrenList[6];
+        newRoom.upperBounds = upperBoundInput.value;
+
+        
+        AssetDatabase.CreateAsset(newRoom, path);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        EditorUtility.FocusProjectWindow();
+        Selection.activeObject = newRoom;
+        
+
     }
 
     private void Doorways(Foldout foldout) {
@@ -68,11 +105,24 @@ public class RoomBuilder : EditorWindow
         for(int i = 0; i < 4;  i++) {
             var door = new Tab("Door " + (i+1), _doorSprite);
 
+            EnumField doorOrientation = new EnumField("Door Orientation", RoomOrientation.none) { style = { marginTop = 10 } };
+            door.Add(doorOrientation);
+
             Vector2IntField doorPos = new Vector2IntField("Door Position") { style = { marginTop = 10 } };
             door.Add(doorPos);
 
-            EnumField doorOrientation = new EnumField("Door Orientation", RoomOrientation.none) { style = { marginTop = 10 } };
-            door.Add(doorOrientation);
+            HelpBox copyPositionHelp = new HelpBox("The Upper Left Position To Start Copying From", HelpBoxMessageType.Info);
+            helpBoxes.Add(copyPositionHelp);
+            door.Add(copyPositionHelp);
+
+            Vector2IntField startCopyField = new Vector2IntField("Start Copy Position") { style = { marginTop = 10 } };
+            door.Add(startCopyField);
+
+            IntegerField copyWidth = new IntegerField("Copy Tiles Width") { style = { marginTop = 10 } };
+            door.Add(copyWidth);
+
+            IntegerField copyHeight = new IntegerField("Copy Tiles Height") { style = { marginTop = 10 } };
+            door.Add(copyHeight);
 
             DoorwaysTab.Add(door);
 
@@ -82,8 +132,14 @@ public class RoomBuilder : EditorWindow
         foldout.Add(box);
 
     }
+
+    //2. TOGGLE FOR THE ROOM TEMPLATE S.O. DETAILS
     private void RoomTemplateFoldout() {
         Foldout roomTemplateFoldout = new Foldout { text = "2. Room Template" };
+
+        TextField roomName = new TextField() { label = "Room Name: "};
+        roomTemplateFoldout.Add(roomName);
+
         //helpbox
         HelpBox roomNodeTutorial = new HelpBox("Select your room type, this will help use the correct node when creating the level node graph", HelpBoxMessageType.Info);
         helpBoxes.Add(roomNodeTutorial);
@@ -119,8 +175,10 @@ public class RoomBuilder : EditorWindow
         Doorways(roomTemplateFoldout);
 
         _scrollView.Add(roomTemplateFoldout);
+        _foldout = roomTemplateFoldout;
     }
 
+    //1. TOGGLE FOR THE ROOM PREFAB
     private void CreateRoomPrefabFoldout() {
         Foldout roomPrefabFoldout = new Foldout { text = "1. Create Room Prefab" };
         HelpBox prefabTutorial = new HelpBox("Select your Room Prefab to visualize it. You can skip this part, " +
@@ -144,6 +202,7 @@ public class RoomBuilder : EditorWindow
             roomPreview.image = AssetPreview.GetAssetPreview(evt.newValue);
             roomPreview.RemoveFromClassList("room-placeholder-image");
             roomPreview.AddToClassList("room-prefab-image");
+            _roomPrefab = evt.newValue;
         });
 
         _scrollView.Add(roomPrefabFoldout);
