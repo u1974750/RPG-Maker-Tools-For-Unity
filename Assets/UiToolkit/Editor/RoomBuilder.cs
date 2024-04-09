@@ -80,6 +80,18 @@ public class RoomBuilder : EditorWindow
         Vector2IntField upperBoundInput = (Vector2IntField) childrenList[6];
         newRoom.upperBounds = upperBoundInput.value;
 
+
+        List<VisualElement> doorwayTabs = childrenList[8].Children().ToList()[0].Children().ToList();
+
+        for(int i = 0; i < 4; i++) {
+            List<VisualElement> doorWay = doorwayTabs[i].Children().ToList();
+            Doorway newDoorway = new Doorway();
+
+            EnumField doorOrientation = (EnumField)doorWay[i];
+            newDoorway.orientation = (RoomOrientation)doorOrientation.value;
+            Debug.Log(newDoorway.orientation);
+        }
+
         
         AssetDatabase.CreateAsset(newRoom, path);
         AssetDatabase.SaveAssets();
