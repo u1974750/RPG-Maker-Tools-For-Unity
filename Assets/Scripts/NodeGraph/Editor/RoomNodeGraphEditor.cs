@@ -32,7 +32,7 @@ public class RoomNodeGraphEditor : EditorWindow
     private const float gridSmall = 25f;
 
 
-    [MenuItem("Room Node Graph Editor", menuItem = "Window/Dungeon Editor/Room Node Graph Editor")]
+    [MenuItem("Room Node Graph Editor", menuItem = "Dungeon Builder/Dungeon Editor/Room Node Graph Editor")]
     private static void OpenWindow()
     {
         GetWindow<RoomNodeGraphEditor>("Room Node Graph Editor");

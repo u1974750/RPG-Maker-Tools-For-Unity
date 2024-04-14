@@ -82,14 +82,28 @@ public class RoomBuilder : EditorWindow
 
 
         List<VisualElement> doorwayTabs = childrenList[8].Children().ToList()[0].Children().ToList();
+        newRoom.doorwayList = new List<Doorway>();
 
         for(int i = 0; i < 4; i++) {
             List<VisualElement> doorWay = doorwayTabs[i].Children().ToList();
             Doorway newDoorway = new Doorway();
 
-            EnumField doorOrientation = (EnumField)doorWay[i];
+            EnumField doorOrientation = (EnumField)doorWay[0];
             newDoorway.orientation = (RoomOrientation)doorOrientation.value;
-            Debug.Log(newDoorway.orientation);
+            
+            Vector2IntField doorPos = (Vector2IntField)doorWay[1];
+            newDoorway.position = doorPos.value;
+
+            Vector2IntField startCopyPos = (Vector2IntField)doorWay[3];
+            newDoorway.doorwayStartCopyPosition = startCopyPos.value;
+
+            IntegerField tileWidth = (IntegerField)doorWay[4];
+            newDoorway.doorwayCopyTileWidth = tileWidth.value;
+
+            IntegerField tileHeight = (IntegerField)doorWay[5];
+            newDoorway.doorwayCopyTileHeight = tileHeight.value;
+
+            newRoom.doorwayList.Add(newDoorway);
         }
 
         

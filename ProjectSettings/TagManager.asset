@@ -11,6 +11,7 @@ TagManager:
   - roomTilemap
   - collisionTilemap
   - wallsTilemap
+  - GameManager
   layers:
   - Default
   - TransparentFX

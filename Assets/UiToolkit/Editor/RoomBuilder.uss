@@ -8,6 +8,12 @@
     color: rgb(167, 159, 200);
 }
 
+.subtitle-label{
+    -unity-font-style: bold;    
+    font-size: 15px;
+    color: rgb(167, 159, 200);
+}
+
 .foldout-label {
     font-size: 13px;
     -unity-font-style: bold;
@@ -21,6 +27,12 @@ Toggle{
 
 TextElement{
     font-size: 12px;
+}
+
+.simple-text{
+    font-size: 13px;
+    margin: 3%;
+    margin-bottom: 0%;
 }
 
 .tutorial-toggle{
@@ -37,6 +49,11 @@ TextElement{
     margin-bottom: 5%;
     border-width: .5px;
     width: 100%;
+}
+
+.tutorial-small-helpbox{
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .room-placeholder-image{
@@ -58,4 +75,15 @@ TextElement{
     border-width: 1px;
     border-radius: 5px;
     border-color: white;
+}
+
+.tutorial-box{
+    margin-top: 3%;
+    padding-bottom: 3%;
+    margin-right: 5%;
+    margin-left: 3%;
+    padding-left: 2%;
+    padding-top: 3%;
+    border-width: 1px;
+    border-radius: 5px;
 }
