@@ -207,8 +207,7 @@ public class RoomBuilder : EditorWindow
     //1. TOGGLE FOR THE ROOM PREFAB
     private void CreateRoomPrefabFoldout() {
         Foldout roomPrefabFoldout = new Foldout { text = "1. Create Room Prefab" };
-        HelpBox prefabTutorial = new HelpBox("Select your Room Prefab to visualize it. You can skip this part, " +
-                                    "it's only to help you visualize the room", HelpBoxMessageType.Info);
+        HelpBox prefabTutorial = new HelpBox("Select your Room Prefab to visualize it. This prefab will be used later to create the dungeon layout", HelpBoxMessageType.Info);
         helpBoxes.Add(prefabTutorial);
         roomPrefabFoldout.Add(prefabTutorial);
 

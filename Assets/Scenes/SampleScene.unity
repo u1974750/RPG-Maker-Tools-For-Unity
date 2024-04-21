@@ -156,7 +156,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.613964, g: 0.6886792, b: 0.6235453, a: 0}
+  m_BackGroundColor: {r: 0.52643293, g: 0.6603774, b: 0.54053235, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -312,6 +312,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7094176580566326515, guid: ef633149787e4cc4bad9d4a0c25137a5, type: 3}
+      propertyPath: dungeonLevelList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7094176580566326515, guid: ef633149787e4cc4bad9d4a0c25137a5, type: 3}
+      propertyPath: 'dungeonLevelList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b2fcc8085f42f2c4dab5d2319b205e34, type: 2}
+    - target: {fileID: 7094176580566326515, guid: ef633149787e4cc4bad9d4a0c25137a5, type: 3}
+      propertyPath: 'dungeonLevelList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d40d0a25a66049d468b59eac4491adee, type: 2}
     - target: {fileID: 7347635447120274366, guid: ef633149787e4cc4bad9d4a0c25137a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

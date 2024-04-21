@@ -14,12 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: TutorialLevel
   roomTemplateList:
+  - {fileID: 11400000, guid: a90bdfb9553f2554eb99edb37c758f3c, type: 2}
+  - {fileID: 11400000, guid: 28eaaa9cc4d6cf14883d07cc48ad786f, type: 2}
   - {fileID: 11400000, guid: 07d22c22317c77647b97e0429ec51e13, type: 2}
   - {fileID: 11400000, guid: 0e4cc98d4b87bde42ae4f94e6d04155f, type: 2}
-  - {fileID: 11400000, guid: 528f4c08db657834e989e544f9c8b761, type: 2}
-  - {fileID: 11400000, guid: a90bdfb9553f2554eb99edb37c758f3c, type: 2}
-  - {fileID: 11400000, guid: cb5c0f0bb39b0de418c07afe998a2433, type: 2}
-  - {fileID: 11400000, guid: 28eaaa9cc4d6cf14883d07cc48ad786f, type: 2}
   roomNodeGraphList:
   - {fileID: 11400000, guid: 8a85ca27e84e5e641a691c1bad578e2e, type: 2}
-  - {fileID: 11400000, guid: 04b3f2b55198b064192808b02eb9db91, type: 2}
