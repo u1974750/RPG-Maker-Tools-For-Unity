@@ -21,14 +21,19 @@ public class DungeonBuilderTutorialController : EditorWindow
         // Duplicate the prefab
         GameObject duplicatedPrefab = PrefabUtility.InstantiatePrefab(roomTemplatePrefab) as GameObject;
 
+
         // Check if duplication was successful
         if (duplicatedPrefab != null) {
 
             PrefabUtility.SaveAsPrefabAsset(duplicatedPrefab, "Assets/Prefabs/Dungeon/Rooms/NewRoom.prefab");
             // Open the duplicated prefab for editing
+            DestroyImmediate(duplicatedPrefab);
+            duplicatedPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Dungeon/Rooms/NewRoom.prefab");
+            Instantiate(duplicatedPrefab);
             Selection.activeGameObject = duplicatedPrefab;
             EditorGUIUtility.PingObject(duplicatedPrefab);
             OpenTilePalette();
+
         }
         else {
             Debug.LogWarning("Failed to duplicate prefab.");
@@ -81,14 +86,14 @@ public class DungeonBuilderTutorialController : EditorWindow
         box.Add(titleLabel);
 
         TextElement txt1 = new TextElement() {
-            text = "First thigs first, press this button to create a Room Prefab." +
-                                                      "Open the prefab and you will see different players already prepared." +
+            text = "First things first, press this button to create a Room Prefab." +
+                                                      "Open the prefab, and you will see different players already prepared." +
                                                       "Use the Tile Palette to create your room however you like!"
         };
         txt1.AddToClassList("simple-text");
         box.Add(txt1);
 
-        HelpBox txt2 = new HelpBox("Remember deleting the prefab from the scene once you are finished!!", HelpBoxMessageType.None);
+        HelpBox txt2 = new HelpBox("Remember to delete the prefab from the scene once you are finished!!", HelpBoxMessageType.None);
         txt2.AddToClassList("tutorial-small-helpbox");
         box.Add(txt2);
 
@@ -108,10 +113,10 @@ public class DungeonBuilderTutorialController : EditorWindow
 
 
         TextElement txt2 = new TextElement() {
-            text = "Once you finish \"drawing\" your room you have to create the S.O, so the project knows how to connect " +
+            text = "Once you finish \"drawing\" your room, you have to create the S.O, so the project knows how to connect " +
                    "your room with the others.\n" +
                    "You can use the Default Scriptable Object, or the Dungeon Room Creator tool, " +
-                   "wich makes it easier and explains each step."
+                   "which makes it easier and explains each step."
         };
         txt2.AddToClassList("simple-text");
         box.Add(txt2);
@@ -140,22 +145,22 @@ public class DungeonBuilderTutorialController : EditorWindow
         box.Add(titleLabel);
 
         TextElement txt1 = new TextElement() {
-            text = "If you only have one room, you might wanna repeat steps 1 and 2 a few times.\n" +
-                   "Now that you have different rooms created it's time to create a level.\n" +
-                   "With the next button a Node editor will open, with right click you will be able to spanw a node" +
-                   "and select wich type it corresponds to. Connect them until you are happy with how it looks"
+            text = "If you only have one room, you might want to repeat steps 1 and 2 a few times.\n" +
+                   "Now that you have different rooms created, it's time to create a level.\n" +
+                   "With the next button a Node editor will open, with right click you will be able to spawn a node" +
+                   "and select which type it corresponds to. Connect them until you are happy with how it looks"
         };
         txt1.AddToClassList("simple-text");
         box.Add(txt1);
 
         HelpBox txt2 = new HelpBox("The orientation of the nodes doesn't affect the final dungeon, if you place a room " +
-                                   "at the right of another it mighjt create on the left!",
+                                   "at the right of another, it might create on the left!",
                                    HelpBoxMessageType.None);
         txt2.AddToClassList("tutorial-small-helpbox");
         box.Add(txt2);
         
         HelpBox txt3 = new HelpBox("You can create multiple rooms of the same type, for example various Small Rooms, later on " +
-                                   "you will select wich ones you want for this specific node graph",
+                                   "you will select which ones you want for this specific node graph",
                                    HelpBoxMessageType.None);
         txt3.AddToClassList("tutorial-small-helpbox");
         box.Add(txt3);
@@ -178,7 +183,7 @@ public class DungeonBuilderTutorialController : EditorWindow
         TextElement txt1 = new TextElement() {
             text = "Now it's time to create the level! You can have multiple Room Node Graphs " +
                    "if you want more generation variety\n\n" +
-                   "Press the buttoin below to create a new level S.O and populate the variables:\n" +
+                   "Press the button below to create a new level S.O and populate the variables:\n" +
                    "1. Enter the name you like for the level. \n" +
                    "2. Enter the different rooms S.O you created previously. " +
                        "Select only the ones you want to use for this specific level!\n" +
@@ -193,7 +198,7 @@ public class DungeonBuilderTutorialController : EditorWindow
         };
         box.Add(btn1);
 
-        HelpBox txt3 = new HelpBox("if you can't find your RoomS.O. Folder or the Node graph folder use the buttons below!",
+        HelpBox txt3 = new HelpBox("If you can't find your RoomS.O. Folder or the Node graph folder use the buttons below!",
                                    HelpBoxMessageType.None);
         txt3.AddToClassList("tutorial-small-helpbox"); ;
         box.Add(txt3);
@@ -216,14 +221,14 @@ public class DungeonBuilderTutorialController : EditorWindow
 
         TextElement txt1 = new TextElement() {
             text = "Great, we are almost done!\n" +
-                   "on the scene inspectoir you will find the GameManager object, inside there is a field called " +
+                   "on the scene inspector you will find the GameManager object, inside there is a field called " +
                    "\"Dungeon Level List\", you can drag there the level you just created. The order will indicate the game level orders." +
                    "If you want to test it, make sure the \"Current Dungeon Level\" is set to the same number as your level element number."
         };
         txt1.AddToClassList("simple-text");
         box.Add(txt1);
 
-        HelpBox txt3 = new HelpBox("If somehow you deleted the Game manager from scene you could find a new one inside the prefab/Resources folder, " +
+        HelpBox txt3 = new HelpBox("If somehow you deleted the Game manager from the scene, you could find a new one inside the prefab/Resources folder, " +
                                     "or use the button below",
                                   HelpBoxMessageType.None);
         txt3.AddToClassList("tutorial-small-helpbox"); ;
