@@ -76,22 +76,20 @@ public class DragAndDropManipulator : PointerManipulator {
     // if there is no overlapping slot.
     private void PointerCaptureOutHandler(PointerCaptureOutEvent evt) {
         if (enabled) {
-            List<VisualElement> slots = dad_Window.Slots;
-            VisualElement slotsContainer = root.Q<VisualElement>("slots");
-            List<VisualElement> overlappingSlots = slots.Where(OverlapsTarget).ToList();
 
-            VisualElement closestOverlappingSlot = FindClosestSlot(overlappingSlots);
+            if (OverlapsTarget(dad_Window.BigSlot)) {
+                Vector2 targetCenter = new Vector2(
+                    dad_Window.BigSlot.layout.x + dad_Window.BigSlot.layout.width / 2f,
+                    dad_Window.BigSlot.layout.y + dad_Window.BigSlot.layout.height / 2f);
 
-            Vector3 closestPos = Vector3.zero;
-            if (closestOverlappingSlot != null) {
-                closestPos = RootSpaceOfSlot(closestOverlappingSlot);
-                closestPos = new Vector2(closestPos.x - 5, closestPos.y - 5);
+                target.transform.position = dad_Window.BigSlot.transform.position;
+                target.style.left = targetCenter.x - target.layout.width / 2f;
+                target.style.top = targetCenter.y - target.layout.height / 2f;
+
             }
-            target.transform.position =
-                closestOverlappingSlot != null ?
-                closestPos :
-                targetStartPosition;
-
+            else {
+                target.transform.position = targetStartPosition;
+            }
             enabled = false;
         }
     }
@@ -119,5 +117,6 @@ public class DragAndDropManipulator : PointerManipulator {
     private Vector3 RootSpaceOfSlot(VisualElement slot) {
         Vector2 slotWorldSpace = slot.parent.LocalToWorld(slot.layout.position);
         return root.WorldToLocal(slotWorldSpace);
+        
     }
 }

@@ -4,7 +4,9 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - m_VisualTreeAsset: {fileID: 9197481963319205126, guid: 8d547995f595a164096639aaac25bdf6, type: 3}
+  - m_ViewDataDictionary: {instanceID: 0}
+  - _character: {fileID: 4106213231394428757, guid: 864123617318c80488a098fd6f630a13, type: 3}
+  - _clothes: {fileID: 5220678257822599257, guid: 02e9b069d8e0d184d8e7abfb564844d2, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
