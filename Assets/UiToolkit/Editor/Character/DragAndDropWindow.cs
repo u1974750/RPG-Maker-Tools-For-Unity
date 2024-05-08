@@ -23,7 +23,8 @@ public class DragAndDropWindow : EditorWindow {
     public void CreateGUI() {
         // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
-        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("Assets/UiToolkit/Editor/Character/DragAndDropWindow.uss");
+        var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>
+                         ("Assets/UiToolkit/Editor/Character/DragAndDropWindow.uss");
         if (styleSheet != null) root.styleSheets.Add(styleSheet);
 
         //MAIN TITLE
@@ -38,34 +39,6 @@ public class DragAndDropWindow : EditorWindow {
         _slots.Add(_bigSlot);
 
         InitSprites(root);
-
-
-        /*
-        VisualElement row1 = new VisualElement() { name = "row1" };
-        row1.AddToClassList("slot_row");
-
-        VisualElement slot1 = new VisualElement() { name = "slot1" };
-        slot1.AddToClassList("slot");
-        row1.Add(slot1);   
-        
-        VisualElement slot2 = new VisualElement() { name = "slot2" };
-        slot2.AddToClassList("slot");
-        row1.Add(slot2);
-
-        root.Add(row1);
-
-        _slots.Add(slot1);
-        _slots.Add(slot2);
-
-        StyleBackground backgroundImage = new StyleBackground(_humanSprite);
-        Debug.Log(_clothes.name);
-        VisualElement obj = new VisualElement() { name = "object", style = { backgroundImage = backgroundImage }};
-        obj.AddToClassList("object");
-        root.Add(obj);
-        */
-
-
-       //DragAndDropManipulator manipulator = new DragAndDropManipulator(obj, this);
     }
 
     private VisualElement createSlot(string name) {
@@ -95,18 +68,9 @@ public class DragAndDropWindow : EditorWindow {
                 }
             };
             newObject.AddToClassList("object");
+            newSlot.Add(newObject);
 
-            root.Add(newObject);
-
-            //Place object at center of slot
-            Vector2 targetCenter = new Vector2( newSlot.layout.x + newSlot.layout.width / 2f,
-                                                newSlot.layout.y + newSlot.layout.height / 2f);
-
-            newObject.transform.position = newSlot.transform.position;
-            newObject.style.left = targetCenter.x - newObject.layout.width / 2f;
-            newObject.style.top = targetCenter.y - newObject.layout.height / 2f;
-
-            DragAndDropManipulator manipulator = new DragAndDropManipulator(newObject, this);
+            DragAndDropManipulator manipulator = new DragAndDropManipulator(newObject, this, root);
             i++;
         }
         root.Add(gridContainer);

@@ -10,9 +10,9 @@ public class DragAndDropManipulator : PointerManipulator {
     private DragAndDropWindow dad_Window;
     // Write a constructor to set target and store a reference to the
     // root of the visual tree.
-    public DragAndDropManipulator(VisualElement target, DragAndDropWindow dad_Window) {
+    public DragAndDropManipulator(VisualElement target, DragAndDropWindow dad_Window, VisualElement root) {
         this.target = target;
-        root = target.parent;
+        this.root = root;
         this.dad_Window = dad_Window;
     }
 
@@ -55,9 +55,14 @@ public class DragAndDropManipulator : PointerManipulator {
         if (enabled && target.HasPointerCapture(evt.pointerId)) {
             Vector3 pointerDelta = evt.position - pointerStartPosition;
 
+            target.transform.position = new Vector2(targetStartPosition.x + pointerDelta.x,
+                                                    targetStartPosition.y + pointerDelta.y);
+
+            /*
             target.transform.position = new Vector2(
                 Mathf.Clamp(targetStartPosition.x + pointerDelta.x, 0, target.panel.visualTree.worldBound.width),
                 Mathf.Clamp(targetStartPosition.y + pointerDelta.y, 0, target.panel.visualTree.worldBound.height));
+            */
         }
     }
 
@@ -69,23 +74,27 @@ public class DragAndDropManipulator : PointerManipulator {
         }
     }
 
-    // This method checks whether a drag is in progress. If true, queries the root
-    // of the visual tree to find all slots, decides which slot is the closest one
-    // that overlaps target, and sets the position of target so that it rests on top
-    // of that slot. Sets the position of target back to its original position
+    // This method checks whether a drag is in progress. If true, sets the position
+    // of target so that it rests on top of the big slot.
+    // Sets the position of target back to its original position
     // if there is no overlapping slot.
     private void PointerCaptureOutHandler(PointerCaptureOutEvent evt) {
         if (enabled) {
 
             if (OverlapsTarget(dad_Window.BigSlot)) {
-                Vector2 targetCenter = new Vector2(
-                    dad_Window.BigSlot.layout.x + dad_Window.BigSlot.layout.width / 2f,
-                    dad_Window.BigSlot.layout.y + dad_Window.BigSlot.layout.height / 2f);
+                if (dad_Window.BigSlot.childCount == 0) {
+                    dad_Window.BigSlot.Add(target);
+                    target.BringToFront();
+                    target.transform.position = new Vector2(0f, (dad_Window.BigSlot.layout.height / 2f) - (target.layout.height / 2));
 
-                target.transform.position = dad_Window.BigSlot.transform.position;
-                target.style.left = targetCenter.x - target.layout.width / 2f;
-                target.style.top = targetCenter.y - target.layout.height / 2f;
+                }
+                else { 
+                
+                    
+                    target.transform.position = targetStartPosition;
+                }
 
+               
             }
             else {
                 target.transform.position = targetStartPosition;
@@ -98,25 +107,4 @@ public class DragAndDropManipulator : PointerManipulator {
         return target.worldBound.Overlaps(slot.worldBound);
     }
 
-    private VisualElement FindClosestSlot(List<VisualElement> slots) {
-        List<VisualElement> slotsList = slots.ToList();
-        float bestDistanceSq = float.MaxValue;
-        VisualElement closest = null;
-        foreach (VisualElement slot in slotsList) {
-            Vector3 displacement =
-                RootSpaceOfSlot(slot) - target.transform.position;
-            float distanceSq = displacement.sqrMagnitude;
-            if (distanceSq < bestDistanceSq) {
-                bestDistanceSq = distanceSq;
-                closest = slot;
-            }
-        }
-        return closest;
-    }
-
-    private Vector3 RootSpaceOfSlot(VisualElement slot) {
-        Vector2 slotWorldSpace = slot.parent.LocalToWorld(slot.layout.position);
-        return root.WorldToLocal(slotWorldSpace);
-        
-    }
 }
