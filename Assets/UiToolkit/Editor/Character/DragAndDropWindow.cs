@@ -32,13 +32,55 @@ public class DragAndDropWindow : EditorWindow {
         windowTitle.AddToClassList("main-title");
         root.Add(windowTitle);
 
+        //TOGGLE
+        // Create a TabView with Tabs that only contains a label.
+        TabView mainTabView = new TabView() { style = { marginTop = 15, marginLeft = 15 } };
+
+        Tab tabOne = new Tab("One");
+        mainTabView.Add(tabOne);
+
+        Tab tabTwo = new Tab("Two");
+        mainTabView.Add(tabTwo);
+
+        root.Add(mainTabView);
+
+        //VISUAL ELEMENT BIG BOX
+        VisualElement topBox = new VisualElement();
+        topBox.AddToClassList("alignment-box");
+        tabOne.Add(topBox);
+
         //BIG SLOT
         _bigSlot = new VisualElement() { name = "bigSlot" };
         _bigSlot.AddToClassList("big_slot");
-        root.Add(_bigSlot);
+        topBox.Add(_bigSlot);
         _slots.Add(_bigSlot);
 
-        InitSprites(root);
+        //PROPERTIES
+        VisualElement columnBox = new VisualElement();
+
+        ToggleButtonGroup ButtonGroup = new ToggleButtonGroup("Controller");
+        ButtonGroup.Add(new Button() { text = "NPC", tooltip = "The character will be controlled by AI" });
+        ButtonGroup.Add(new Button() { text = "Player", tooltip = "The character will be controlled by the player" });
+        columnBox.Add(ButtonGroup);
+
+        ToggleButtonGroup ButtonGroup1 = new ToggleButtonGroup("CharacterStats");
+        ButtonGroup1.Add(new Button() { text = "Melee Attacker", tooltip = "The character will attack with short weapons" });
+        ButtonGroup1.Add(new Button() { text = "Range Attacker", tooltip = "The character will attack from a distance" });
+        columnBox.Add(ButtonGroup1);
+
+        ToggleButtonGroup ButtonGroup2 = new ToggleButtonGroup("Pattrol");
+        ButtonGroup2.Add(new Button() { text = "Pattrol", tooltip = "The character will pattrol through the map points" });
+        ButtonGroup2.Add(new Button() { text = "Static", tooltip = "The character will be still at the spawn point" });
+        columnBox.Add(ButtonGroup2);
+
+        Button createButton = new Button();
+        createButton.text = "Create Character";
+        columnBox.Add(createButton);
+
+        topBox.Add(columnBox);
+
+        //SPRITES
+        InitSprites(tabOne);
     }
 
     private VisualElement createSlot(string name) {

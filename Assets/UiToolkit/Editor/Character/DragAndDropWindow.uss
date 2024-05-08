@@ -13,8 +13,8 @@
 }
 
 .big_slot{
-    width: 300px;
-    height: 300px;
+    width: 150px;
+    height: 150px;
     margin: 5px;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
@@ -40,4 +40,19 @@
     margin-top: 5%;
     font-size: 20px;
     color: rgb(167, 159, 200);
+}
+
+.alignment-box{
+    flex-direction: row; 
+}
+.second-alignment-box{
+    flex-direction: column;
+}
+
+ToggleButtonGroup{
+    margin: 2%;
+    margin-left: 5%;
+}
+Button:checked{
+    background-color: rgb(132, 125, 161);
 }

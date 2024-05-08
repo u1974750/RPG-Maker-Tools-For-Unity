@@ -88,13 +88,21 @@ public class DragAndDropManipulator : PointerManipulator {
                     target.transform.position = new Vector2(0f, (dad_Window.BigSlot.layout.height / 2f) - (target.layout.height / 2));
 
                 }
-                else { 
-                
-                    
-                    target.transform.position = targetStartPosition;
+                else {
+                    List<VisualElement> childObject = dad_Window.BigSlot.Children().ToList();
+                    childObject[0].RemoveFromHierarchy();
+                    target.parent.Add(childObject[0]);
+                    childObject[0].transform.position = targetStartPosition;
+                    //dad_Window.BigSlot.Clear();
+                    //target.transform.position = targetStartPosition;
+
+                    dad_Window.BigSlot.Add(target);
+                    target.BringToFront();
+                    target.transform.position = new Vector2(0f, ( dad_Window.BigSlot.layout.height / 2f ) - ( target.layout.height / 2 ));
+
                 }
 
-               
+
             }
             else {
                 target.transform.position = targetStartPosition;
