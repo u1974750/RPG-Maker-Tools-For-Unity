@@ -12,6 +12,7 @@ TagManager:
   - collisionTilemap
   - wallsTilemap
   - GameManager
+  - pattrolPoint
   layers:
   - Default
   - TransparentFX
