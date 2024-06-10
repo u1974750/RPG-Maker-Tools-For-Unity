@@ -12,6 +12,10 @@
     align-self: center;
 }
 
+.column_box_alignment{
+    width: 80%;
+}
+
 .big_slot{
     width: 150px;
     height: 150px;
@@ -44,6 +48,7 @@
 
 .alignment-box{
     flex-direction: row; 
+    margin-top: 3%;
 }
 .second-alignment-box{
     flex-direction: column;
@@ -55,4 +60,8 @@ ToggleButtonGroup{
 }
 Button:checked{
     background-color: rgb(132, 125, 161);
+}
+
+HelpBox{
+    font-size: 14px;
 }
