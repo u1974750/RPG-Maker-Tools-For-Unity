@@ -65,3 +65,7 @@ Button:checked{
 HelpBox{
     font-size: 14px;
 }
+Button{
+    margin-top: 3%;
+    
+}

@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour
 {
     private enum State { Walk, Idle };
 
-    public bool isRange;
+    public bool isMelee;
     public bool isPattrol;
     public GameObject[] pattrolPoints;
 
