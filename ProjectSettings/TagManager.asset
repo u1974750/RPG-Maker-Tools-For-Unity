@@ -13,17 +13,20 @@ TagManager:
   - wallsTilemap
   - GameManager
   - pattrolPoint
+  - SlashAttack
+  - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
   - Room
   - Wall
-  - 
-  - 
+  - PattrolPoints
+  - Slash
   - 
   - 
   - 

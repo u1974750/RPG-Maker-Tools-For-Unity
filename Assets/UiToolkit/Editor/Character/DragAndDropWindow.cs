@@ -45,10 +45,10 @@ public class DragAndDropWindow : EditorWindow {
         // Create a TabView with Tabs that only contains a label.
         TabView mainTabView = new TabView() { style = { marginTop = 15, marginLeft = 15 } };
 
-        Tab tabOne = new Tab("One");
+        Tab tabOne = new Tab("Premade Sprites");
         mainTabView.Add(tabOne);
 
-        Tab tabTwo = new Tab("Two");
+        Tab tabTwo = new Tab("Sprite Creator");
         mainTabView.Add(tabTwo);
 
         CreateTabOneContent(tabOne);
