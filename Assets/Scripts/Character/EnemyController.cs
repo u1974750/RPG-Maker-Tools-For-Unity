@@ -5,19 +5,19 @@ using UnityEngine.Rendering;
 
 public class EnemyController : MonoBehaviour
 {
-    public enum State { Walk, Idle, Attack, Follow };
+    private enum State { Walk, Idle, Attack, Follow };
 
     public bool isMelee;
     public bool isPattrol;
-    public GameObject[] pattrolPoints;
     public int maxHealth = 3;
+    public GameObject[] pattrolPoints;
 
     private int currentHealth;
     private int currentPattrol = 0;
     private int maxPattrol;
     private int speed = 3;
     private bool isFacingRight = true;
-    public State actualState;
+    private State actualState;
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private GameObject player;

@@ -31,11 +31,7 @@
     height: 50px;
     align-self: center;
     margin: 20px;
-    position: absolute;
-    /*
-    left: 20px;
-    top: 20px;
-    */
+    position: absolute; 
 }
 
 .main-title{

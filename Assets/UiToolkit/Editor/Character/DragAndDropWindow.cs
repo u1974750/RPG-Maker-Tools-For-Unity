@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditorInternal;
+using UnityEditor.Search;
 
 public class DragAndDropWindow : EditorWindow {
 
@@ -23,10 +23,10 @@ public class DragAndDropWindow : EditorWindow {
     public VisualElement BigSlot => _bigSlotFirstTab;
     public VisualElement BigSlotSecondTab => _bigSlotSecondTab;
 
-    [MenuItem("Character Creator/Drag And Drop")]
-    public static void ShowExample() {
+    [MenuItem("Character Creator/Character Creator")]
+    public static void OpenCharacterWindow() {
         DragAndDropWindow wnd = GetWindow<DragAndDropWindow>();
-        wnd.titleContent = new GUIContent("Drag And Drop");
+        wnd.titleContent = new GUIContent("Character Creator");
     }
 
     public void CreateGUI() {
@@ -45,10 +45,10 @@ public class DragAndDropWindow : EditorWindow {
         // Create a TabView with Tabs that only contains a label.
         TabView mainTabView = new TabView() { style = { marginTop = 15, marginLeft = 15 } };
 
-        Tab tabOne = new Tab("Premade Sprites");
+        Tab tabOne = new Tab("Player / Enemies");
         mainTabView.Add(tabOne);
 
-        Tab tabTwo = new Tab("Sprite Creator");
+        Tab tabTwo = new Tab("NPCs");
         mainTabView.Add(tabTwo);
 
         CreateTabOneContent(tabOne);
@@ -85,23 +85,67 @@ public class DragAndDropWindow : EditorWindow {
             //collider
             newCharacter.AddComponent<CapsuleCollider2D>();
 
-            //Script
+            //NPC OR PLAYER 
             if (_isNPC) {
+                //tag
+                newCharacter.tag = "Enemy";
+                //script
                 EnemyController controller = newCharacter.AddComponent<EnemyController>();
                 controller.isMelee = _isMelee;
                 controller.isPattrol = _isPattrol;
-            }
-            else { newCharacter.AddComponent<PlayerMovement>(); }
 
+                CircleCollider2D circleCollider = newCharacter.AddComponent<CircleCollider2D>();
+                circleCollider.isTrigger = true;
+
+                //exclude layers in collision
+                int layermask = ( ( 1 << 8 ) | ( 1 << 9 ) );
+                circleCollider.excludeLayers = layermask;
+
+                //collider radius
+                if (_isMelee) {
+                    //collider
+                    circleCollider.radius = 2.25f;
+                }
+                else {
+                    //collider
+                    circleCollider.radius = 4.03f;
+                }
+            }
+            else { 
+                //script
+                newCharacter.AddComponent<PlayerMovement>();
+
+                //tag
+                newCharacter.tag = "Player";
+
+                //rigidbody
+                Rigidbody2D rb2D = newCharacter.AddComponent<Rigidbody2D>();
+                rb2D.isKinematic = true;
+
+                //cameraChild
+                GameObject cam = Resources.Load<GameObject>("Main Camera");
+                GameObject instantiatedCam = (GameObject) PrefabUtility.InstantiatePrefab(cam);
+
+                instantiatedCam.transform.parent = newCharacter.transform;
+            }
+
+            //slash child
+            if((_isNPC && _isMelee) || !_isNPC) {
+                GameObject slash = Resources.Load<GameObject>("Slash");
+                GameObject insatantiatedSlash = (GameObject) PrefabUtility.InstantiatePrefab(slash);
+
+                insatantiatedSlash.transform.parent = newCharacter.transform;
+            }
 
             //Save as a prefab
+            if (!_isNPC) { removedName = "Player_" +removedName; }
             string path = "Assets/Prefabs/Characters/" + removedName + ".prefab";
             path = AssetDatabase.GenerateUniqueAssetPath(path);
             GameObject newGameObject = PrefabUtility.SaveAsPrefabAsset(newCharacter, path);
             AssetDatabase.SaveAssets();
 
             //Destroy temporary GameObject
-            GameObject.DestroyImmediate(newCharacter);
+            DestroyImmediate(newCharacter);
 
             //ping the new character
             EditorGUIUtility.PingObject(newGameObject);
@@ -126,7 +170,7 @@ public class DragAndDropWindow : EditorWindow {
         columnBox.AddToClassList("column_box_alignment");
 
         ToggleButtonGroup toggleController = new ToggleButtonGroup("Controller");
-        toggleController.Add(new Button(setNpcButton) { text = "NPC", tooltip = "The character will be controlled by AI" });
+        toggleController.Add(new Button(setNpcButton) { text = "Enemy", tooltip = "The character will be controlled by AI" });
         toggleController.Add(new Button(setPlayerButton) { text = "Player", tooltip = "The character will be controlled by the player" });
         columnBox.Add(toggleController);
 
@@ -150,6 +194,7 @@ public class DragAndDropWindow : EditorWindow {
         _spriteHelpBox = new HelpBox("There is no Sprite selected! You must select one", HelpBoxMessageType.Error);
         _spriteHelpBox.style.display = DisplayStyle.None;
         tabOne.Add(_spriteHelpBox);
+
 
         //SPRITES
         InitSprites(tabOne, 1);
@@ -195,6 +240,20 @@ public class DragAndDropWindow : EditorWindow {
         //SPRITE SLOTS
         InitSprites(tabTwo, 2);
 
+        //Dialog Bubble
+
+        TextField dialog = new TextField(50000, true, false, ' ');
+        dialog.label = "Dialog Text";
+        dialog.style.marginTop = 10;
+        tabTwo.Add(dialog);
+
+        ObjectField itemInputField = new ObjectField("Item");
+        tabTwo.Add(itemInputField);
+
+        HelpBox itemTooltip = new HelpBox("If item is null the NPC will give nothing and only say the Dialog input text", HelpBoxMessageType.Info);
+        tabTwo.Add(itemTooltip);
+
+        //Create Button
         Button createSkeleton = new Button(createCustomCharacter);
         createSkeleton.text = "Create Character";
         tabTwo.Add(createSkeleton);

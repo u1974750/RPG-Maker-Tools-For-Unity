@@ -1,0 +1,86 @@
+.main-title{
+    -unity-font-style: bold;    
+    -unity-text-align : middle-center;
+    margin-top: 5%;
+    font-size: 20px;
+    color: rgb(167, 159, 200);
+}
+
+.h2-title{
+    -unity-font-style: bold;    
+    -unity-text-align : middle-center;
+    margin-top: 5%;
+    font-size: 15px;
+    color: rgb(167, 159, 200);
+}
+
+.alignment-box{
+    flex-direction: row; 
+    margin-top: 3%;
+}
+
+.big-slot{
+    width: 150px;
+    height: 150px;
+    margin: 5px;
+    margin-left: 3%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
+    align-self: center;
+    position: relative;
+}
+
+.column_box_alignment{
+    width: 80%;
+}
+
+#ItemName{
+    margin-top: 7%;
+    margin-left: 2%;
+    margin-right: 5%;
+    
+    -unity-font-style: bold;
+}
+
+#ItemSprite{
+    margin-top: 3%;
+    margin-left: 2%;    
+    margin-right: 5%;
+    padding-left: 20px;
+    
+    -unity-font-style: bold;
+}
+
+#ItemDuration{
+    margin-top: 3%;
+    margin-left: 2%;
+    padding-left: 20px;
+    
+    -unity-font-style: bold;
+}
+
+#ContainterBox{
+    margin-top: 5%;
+    align-self: center;
+    
+}
+
+RadioButton{
+    flex-direction: row-reverse; 
+    margin-left: 40%;
+}
+
+ToggleButtonGroup{
+    margin-top: 5%;
+}
+
+Button:checked{
+    background-color: rgb(132, 125, 161);
+}
+
+Button:disabled{
+       background-color: default;
+       text-color: #EEEEEE;
+       opacity: 100%;
+
+}
