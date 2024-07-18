@@ -258,6 +258,7 @@ public class DragAndDropWindow : EditorWindow {
         createSkeleton.text = "Create Character";
         tabTwo.Add(createSkeleton);
     }
+
     private VisualElement createSlot(string name) {
         VisualElement slot = new VisualElement() { name = name };
         slot.AddToClassList("slot");
@@ -378,6 +379,31 @@ public class DragAndDropWindow : EditorWindow {
     #endregion
 
     private void createCustomCharacter() {
-        Debug.Log("TODO: unir les parts del personatge ");
+        GameObject newCharacter = new GameObject("NewNPC");
+
+        List<VisualElement> childrenList = BigSlotSecondTab.Children().ToList();
+        for(int i = 0; i < childrenList.Count(); i++) {
+            GameObject newPart = new GameObject();
+
+            var backgroundImage = childrenList[i].resolvedStyle.backgroundImage;
+            Sprite texture = backgroundImage.sprite;       
+
+            SpriteRenderer spriteRenderer = newPart.AddComponent<SpriteRenderer>();
+            spriteRenderer.sprite = texture;
+
+            newPart.name = childrenList[i].name;
+            newPart.transform.SetParent(newCharacter.transform, false);
+        } 
+
+        string path = "Assets/Prefabs/Characters/NPC/NewNPC.prefab";
+        path = AssetDatabase.GenerateUniqueAssetPath(path);
+        GameObject newGameObject = PrefabUtility.SaveAsPrefabAsset(newCharacter, path);
+        AssetDatabase.SaveAssets();
+
+        //Destroy temporary GameObject
+        DestroyImmediate(newCharacter);
+
+        //ping the new character
+        EditorGUIUtility.PingObject(newGameObject);
     }
 }

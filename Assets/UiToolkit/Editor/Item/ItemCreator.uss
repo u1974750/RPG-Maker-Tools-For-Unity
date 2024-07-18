@@ -23,15 +23,36 @@
     width: 150px;
     height: 150px;
     margin: 5px;
-    margin-left: 3%;
+    margin-left: 6%;
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     align-self: center;
     position: relative;
 }
 
+.object {
+    width: 50px;
+    height: 50px;
+    align-self: center;
+    margin: 20px;
+    position: absolute; 
+}
+
+
 .column_box_alignment{
     width: 80%;
+}
+
+.label-button{
+    width: 80px;
+}
+.label-button:checked{
+    background-color: #383838;
+    border-color: #262626;
+}
+.label-button:hover{
+    background-color: #666666;
+    border-color: #262626;
 }
 
 #ItemName{
@@ -75,12 +96,16 @@ ToggleButtonGroup{
 }
 
 Button:checked{
-    background-color: rgb(132, 125, 161);
+    background-color: #847da1; 
+    border-color: #5c5676;
 }
 
 Button:disabled{
        background-color: default;
        text-color: #EEEEEE;
        opacity: 100%;
-
+}
+Button:hover{
+    background-color: #b9b5c9; 
+    border-color: #5c5676;
 }
