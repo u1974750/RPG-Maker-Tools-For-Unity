@@ -16,6 +16,7 @@ TagManager:
   - SlashAttack
   - Enemy
   - Bullet
+  - NPC
   layers:
   - Default
   - TransparentFX

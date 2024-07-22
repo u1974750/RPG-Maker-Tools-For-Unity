@@ -55,12 +55,12 @@ public class Slash : MonoBehaviour
         if(gameObject.transform.position.x < collision.transform.position.x) isLeft = true;
         if (isPlayer) {
             if(collision.gameObject.tag == "Enemy") {
-                collision.GetComponent<EnemyController>().TakeDamage(isLeft);
+                collision.GetComponent<EnemyController>().TakeDamage(isLeft, parentTransform.gameObject.GetComponent<PlayerMovement>().currentStats.strenghtValue);
             }
         }
         else {
             if( collision.gameObject.tag == "Player") {
-                collision.GetComponent<PlayerMovement>().TakeDamage(isLeft);
+                collision.GetComponent<PlayerMovement>().TakeDamage(isLeft, parentTransform.gameObject.GetComponent<EnemyController>().damage);
             }
         }
     }

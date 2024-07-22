@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour
     public bool isMelee;
     public bool isPattrol;
     public int maxHealth = 3;
+    public int damage = 1;
     public GameObject[] pattrolPoints;
 
     private int currentHealth;
@@ -146,7 +147,7 @@ public class EnemyController : MonoBehaviour
         StartCoroutine(IdleTimmingWait());
     }
 
-    public void TakeDamage(bool isLeft) {
+    public void TakeDamage(bool isLeft, int damage) {
         if (isLeft) {
             transform.Translate(new Vector2(0.3f, 0));
         }
@@ -156,7 +157,7 @@ public class EnemyController : MonoBehaviour
 
         spriteRenderer.color = Color.red;
         StartCoroutine(ReturnColorWhite());
-        currentHealth -= 1;
+        currentHealth -= damage;
 
         if (currentHealth <= 0) {
             Die();

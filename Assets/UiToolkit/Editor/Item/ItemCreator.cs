@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 using Label = UnityEngine.UIElements.Label;
+using UnityEditor.UIElements;
 
 
 public class ItemCreator : EditorWindow
@@ -17,6 +18,8 @@ public class ItemCreator : EditorWindow
     private List<ToggleButtonGroup> buttonGroups = new List<ToggleButtonGroup>();
     private GroupBox timeGroupBox;
     private VisualElement bigSlot;
+    private TextField itemName;
+    private Sprite actualItemSprite;
 
     private int healthValue = 0;
     private int armourValue = 0;
@@ -72,7 +75,7 @@ public class ItemCreator : EditorWindow
         columnBox.AddToClassList("column_box_alignment");
 
         //Item info
-        TextField itemName = new TextField(label: "• Item Name") { name = "ItemName"};
+        itemName = new TextField(label: "• Item Name") { name = "ItemName"};
         columnBox.Add(itemName);
 
         //Item name Child
@@ -80,7 +83,7 @@ public class ItemCreator : EditorWindow
         aux.style.paddingLeft = 20f;
 
         //Item Sprite
-        ObjectField itemSprite = new ObjectField() { name = "ItemSprite"};
+        UnityEditor.UIElements.ObjectField itemSprite = new UnityEditor.UIElements.ObjectField() { name = "ItemSprite"};
         itemSprite.objectType = typeof(Sprite);
         itemSprite.label = "• Item Sprite";
         columnBox.Add(itemSprite);
@@ -88,6 +91,7 @@ public class ItemCreator : EditorWindow
         itemSprite.RegisterCallback<ChangeEvent<UnityEngine.Object>>((item) => {
             Sprite i = item.newValue as Sprite;
             StyleBackground backgroundImage = new StyleBackground(i);
+            actualItemSprite = i;
 
             if(bigSlot.childCount != 0) {
                 bigSlot.Clear();
@@ -119,6 +123,7 @@ public class ItemCreator : EditorWindow
         columnBox.Add(timeGroupBox);
 
         RadioButton timeButton1 = new RadioButton("30  seconds");
+        timeButton1.value = true;
         timeGroupBox.Add(timeButton1);
         
         RadioButton timeButton2 = new RadioButton("1  minute");
@@ -229,6 +234,7 @@ public class ItemCreator : EditorWindow
         else {
             noSpriteHelpBox.style.display = DisplayStyle.None;
             hasSprite = true;
+
         }
 
         //check if has time
@@ -252,6 +258,40 @@ public class ItemCreator : EditorWindow
 
         if (CanCreateItem()) {
 
+            GameObject newItem = new GameObject();
+            
+            Item itemScript = newItem.AddComponent<Item>();
+
+            
+            itemScript.SetItemName(itemName.value);
+            Debug.Log(actualItemSprite.name);
+            itemScript.SetItemSprite(actualItemSprite);
+
+            float time = 0;
+            for (int i = 0; i < 3; i++) {
+                RadioButton timeButton = timeGroupBox.Children().ToList()[i] as RadioButton;
+                if (timeButton.value) {
+                    if (i == 0) { time = 30f; break; }
+                    else if (i == 1) { time = 60f; break; }
+                    else if (i == 2) { time = 180f; break; }                   
+                }
+            }
+            itemScript.SetItemTime(time);
+            itemScript.SetItemValues(healthValue, armourValue, strenghtValue, speedValue);
+
+
+       
+            //Save as a prefab
+            string path = "Assets/Prefabs/Items/" + itemName.value + ".prefab";
+            path = AssetDatabase.GenerateUniqueAssetPath(path);
+            GameObject newGameObject = PrefabUtility.SaveAsPrefabAsset(newItem, path);
+            AssetDatabase.SaveAssets();
+
+            //Destroy temporary GameObject
+            DestroyImmediate(newItem);
+
+            //ping the new character
+            EditorGUIUtility.PingObject(newGameObject);
         }
 
     }

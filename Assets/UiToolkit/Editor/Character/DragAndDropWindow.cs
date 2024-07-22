@@ -17,7 +17,8 @@ public class DragAndDropWindow : EditorWindow {
     private bool _isMelee = true;
     private bool _isPattrol = true;
     private HelpBox _spriteHelpBox;
-
+    private TextField _dialog;
+    private ObjectField _itemInputField;
 
     public List<VisualElement> Slots => _slots;
     public VisualElement BigSlot => _bigSlotFirstTab;
@@ -242,13 +243,14 @@ public class DragAndDropWindow : EditorWindow {
 
         //Dialog Bubble
 
-        TextField dialog = new TextField(50000, true, false, ' ');
-        dialog.label = "Dialog Text";
-        dialog.style.marginTop = 10;
-        tabTwo.Add(dialog);
+        _dialog = new TextField(50000, true, false, ' ');
+        _dialog.label = "Dialog Text";
+        _dialog.style.marginTop = 10;
+        tabTwo.Add(_dialog);
 
-        ObjectField itemInputField = new ObjectField("Item");
-        tabTwo.Add(itemInputField);
+        _itemInputField = new ObjectField("Item");
+        _itemInputField.objectType = typeof(GameObject);
+        tabTwo.Add(_itemInputField);
 
         HelpBox itemTooltip = new HelpBox("If item is null the NPC will give nothing and only say the Dialog input text", HelpBoxMessageType.Info);
         tabTwo.Add(itemTooltip);
@@ -380,6 +382,7 @@ public class DragAndDropWindow : EditorWindow {
 
     private void createCustomCharacter() {
         GameObject newCharacter = new GameObject("NewNPC");
+        newCharacter.tag = "NPC";
 
         List<VisualElement> childrenList = BigSlotSecondTab.Children().ToList();
         for(int i = 0; i < childrenList.Count(); i++) {
@@ -390,10 +393,29 @@ public class DragAndDropWindow : EditorWindow {
 
             SpriteRenderer spriteRenderer = newPart.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = texture;
+            spriteRenderer.sortingLayerName = "Player";
+
+            if (texture.name == "CCreator_skeleton") spriteRenderer.sortingOrder = -1;
 
             newPart.name = childrenList[i].name;
             newPart.transform.SetParent(newCharacter.transform, false);
-        } 
+        }
+
+        GameObject dialogBubble = Resources.Load<GameObject>("DialogBubble");
+        GameObject instantiatedBubble = (GameObject)PrefabUtility.InstantiatePrefab(dialogBubble);
+        instantiatedBubble.transform.SetParent(newCharacter.transform, false);
+        instantiatedBubble.transform.position = new Vector3(0f, 1.5f, 0f);
+        instantiatedBubble.SetActive(false);
+
+        newCharacter.transform.localScale = new Vector3(1.2f, 1.2f, 1);
+
+        CircleCollider2D collider = newCharacter.AddComponent<CircleCollider2D>();
+        collider.radius = 1.40f;
+        collider.isTrigger = true;
+
+        NPCController script = newCharacter.AddComponent<NPCController>();
+        script.dialogText = _dialog.value;
+        if(_itemInputField.value != null) script.item = _itemInputField.value as GameObject;
 
         string path = "Assets/Prefabs/Characters/NPC/NewNPC.prefab";
         path = AssetDatabase.GenerateUniqueAssetPath(path);

@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
 
     [SerializeField] Rigidbody2D _rb;
     private float _speed = 2.0f;
-    // Start is called before the first frame update
+
     void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -29,7 +29,7 @@ public class Bullet : MonoBehaviour
         if(collision.gameObject.tag == "Player") {
             bool isLeft = false;
             if(transform.position.x < collision.transform.position.x) isLeft = true;
-            collision.GetComponent<PlayerMovement>().TakeDamage(isLeft);
+            collision.GetComponent<PlayerMovement>().TakeDamage(isLeft, transform.parent.gameObject.GetComponent<EnemyController>().damage);
 
             Destroy(gameObject);
 
