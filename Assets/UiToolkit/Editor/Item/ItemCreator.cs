@@ -262,9 +262,10 @@ public class ItemCreator : EditorWindow
             
             Item itemScript = newItem.AddComponent<Item>();
 
-            
-            itemScript.SetItemName(itemName.value);
-            Debug.Log(actualItemSprite.name);
+            string name = "My new Item";
+            if (itemName.value != "") { name = itemName.value; }
+
+            itemScript.SetItemName(name);
             itemScript.SetItemSprite(actualItemSprite);
 
             float time = 0;
@@ -280,9 +281,10 @@ public class ItemCreator : EditorWindow
             itemScript.SetItemValues(healthValue, armourValue, strenghtValue, speedValue);
 
 
-       
+
             //Save as a prefab
-            string path = "Assets/Prefabs/Items/" + itemName.value + ".prefab";
+            
+            string path = "Assets/Prefabs/Items/" + name + ".prefab";
             path = AssetDatabase.GenerateUniqueAssetPath(path);
             GameObject newGameObject = PrefabUtility.SaveAsPrefabAsset(newItem, path);
             AssetDatabase.SaveAssets();

@@ -14,11 +14,10 @@ public class Item : MonoBehaviour
     public Sprite itemSprite;
     public string itemName;
     public float itemTime;
-    public ItemValues itemValues;
+    public ItemValues itemValues = new ItemValues();
 
 
     public void SetItemValues(int health, int armour, int strenght, int speed) {
-        itemValues = new ItemValues();
 
         itemValues.healthValue = health;
         itemValues.armourValue = armour;

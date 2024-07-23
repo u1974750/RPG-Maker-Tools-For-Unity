@@ -1,8 +1,6 @@
 using System.Collections;
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -57,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
         Attack();
         TakeItem();
 
-        if(hasItem && Input.GetKey(KeyCode.Q)) { usingItem = true; }
+        if(hasItem && Input.GetKey(KeyCode.Q)) { UseItem(); }
         if(usingItem) {
             itemTime -= Time.deltaTime;
             _canvas.transform.Find("Container").gameObject.transform.Find("item").gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = GetClockTime(itemTime);
@@ -133,12 +131,17 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void UseItem() {
-        modifiedStats = item.GetComponent<Item>().GetItemValues();
-
+        usingItem = true;
+        hasItem = false;
+        modifiedStats = item.GetComponent<Item>().itemValues;
+        
         if(modifiedStats.healthValue != 0) {
+            Debug.Log("Enter");
             currentStats.healthValue += modifiedStats.healthValue;
 
             currentHealth += modifiedStats.healthValue;
+
+            _canvas.GetComponent<CanvasController>().AddLife(modifiedStats.healthValue);
 
 
         }
