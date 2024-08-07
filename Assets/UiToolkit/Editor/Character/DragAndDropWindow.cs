@@ -24,6 +24,15 @@ public class DragAndDropWindow : EditorWindow {
     public VisualElement BigSlot => _bigSlotFirstTab;
     public VisualElement BigSlotSecondTab => _bigSlotSecondTab;
 
+    [MenuItem("Character Creator/Pattrol Point")]
+    public static void CreatePattrolPoint() {
+        GameObject pattrolPoint = Resources.Load<GameObject>("PattrolPoint");
+        GameObject instancedPattrolPoint = (GameObject) PrefabUtility.InstantiatePrefab(pattrolPoint);
+
+        EditorGUIUtility.PingObject(instancedPattrolPoint);
+
+    }
+
     [MenuItem("Character Creator/Character Creator")]
     public static void OpenCharacterWindow() {
         DragAndDropWindow wnd = GetWindow<DragAndDropWindow>();
@@ -56,104 +65,7 @@ public class DragAndDropWindow : EditorWindow {
         CreateTabTwoContent(tabTwo);
 
         root.Add(mainTabView);
-    }
-
-    private void CreateCharacterButton() {
-
-        if (_bigSlotFirstTab.childCount == 0) {
-            _spriteHelpBox.style.display = DisplayStyle.Flex;
-        }
-        else {
-            _spriteHelpBox.style.display = DisplayStyle.None;
-            string spriteName = _bigSlotFirstTab.Children().ToList()[0].name;
-
-            //Create Game Object
-            GameObject newCharacter = new GameObject();
-
-            //Sprite Renderer
-            SpriteRenderer spriteRenderer = newCharacter.AddComponent<SpriteRenderer>();
-            Sprite sprite = Resources.Load<Sprite>("Characters_Sprite/" + spriteName);
-            if (sprite != null) { spriteRenderer.sprite = sprite; }
-            spriteRenderer.sortingLayerName = "Player";
-
-            //Animator Controller
-            Animator animator = newCharacter.AddComponent<Animator>();
-            string removedName = spriteName.Substring(4);
-            string newName = "animator_" + removedName;
-            UnityEditor.Animations.AnimatorController animController = Resources.Load<UnityEditor.Animations.AnimatorController>("Animators/" + newName);
-            animator.runtimeAnimatorController = animController;
-
-            //collider
-            newCharacter.AddComponent<CapsuleCollider2D>();
-
-            //NPC OR PLAYER 
-            if (_isNPC) {
-                //tag
-                newCharacter.tag = "Enemy";
-                //script
-                EnemyController controller = newCharacter.AddComponent<EnemyController>();
-                controller.isMelee = _isMelee;
-                controller.isPattrol = _isPattrol;
-
-                CircleCollider2D circleCollider = newCharacter.AddComponent<CircleCollider2D>();
-                circleCollider.isTrigger = true;
-
-                //exclude layers in collision
-                int layermask = ( ( 1 << 8 ) | ( 1 << 9 ) );
-                circleCollider.excludeLayers = layermask;
-
-                //collider radius
-                if (_isMelee) {
-                    //collider
-                    circleCollider.radius = 2.25f;
-                }
-                else {
-                    //collider
-                    circleCollider.radius = 4.03f;
-                }
-            }
-            else { 
-                //script
-                newCharacter.AddComponent<PlayerMovement>();
-
-                //tag
-                newCharacter.tag = "Player";
-
-                //rigidbody
-                Rigidbody2D rb2D = newCharacter.AddComponent<Rigidbody2D>();
-                rb2D.isKinematic = true;
-
-                //cameraChild
-                GameObject cam = Resources.Load<GameObject>("Main Camera");
-                GameObject instantiatedCam = (GameObject) PrefabUtility.InstantiatePrefab(cam);
-
-                instantiatedCam.transform.parent = newCharacter.transform;
-            }
-
-            //slash child
-            if((_isNPC && _isMelee) || !_isNPC) {
-                GameObject slash = Resources.Load<GameObject>("Slash");
-                GameObject insatantiatedSlash = (GameObject) PrefabUtility.InstantiatePrefab(slash);
-
-                insatantiatedSlash.transform.parent = newCharacter.transform;
-            }
-
-            //Save as a prefab
-            if (!_isNPC) { removedName = "Player_" +removedName; }
-            string path = "Assets/Prefabs/Characters/" + removedName + ".prefab";
-            path = AssetDatabase.GenerateUniqueAssetPath(path);
-            GameObject newGameObject = PrefabUtility.SaveAsPrefabAsset(newCharacter, path);
-            AssetDatabase.SaveAssets();
-
-            //Destroy temporary GameObject
-            DestroyImmediate(newCharacter);
-
-            //ping the new character
-            EditorGUIUtility.PingObject(newGameObject);
-
-        }
-
-    }
+    }  
 
     private void CreateTabOneContent(Tab tabOne) {
         //VISUAL ELEMENT BIG BOX
@@ -175,7 +87,7 @@ public class DragAndDropWindow : EditorWindow {
         toggleController.Add(new Button(setPlayerButton) { text = "Player", tooltip = "The character will be controlled by the player" });
         columnBox.Add(toggleController);
 
-        ToggleButtonGroup toggleStats = new ToggleButtonGroup("Attach Mode");
+        ToggleButtonGroup toggleStats = new ToggleButtonGroup("Attack Mode");
         toggleStats.Add(new Button(setMeleeButton) { text = "Melee", tooltip = "The character will attack with short weapons" });
         toggleStats.Add(new Button(setRangeButton) { text = "Range", tooltip = "The character will attack from a distance" });
         columnBox.Add(toggleStats);
@@ -380,6 +292,108 @@ public class DragAndDropWindow : EditorWindow {
 
     #endregion
 
+    private void CreateCharacterButton() {
+
+        if (_bigSlotFirstTab.childCount == 0) {
+            _spriteHelpBox.style.display = DisplayStyle.Flex;
+        }
+        else {
+            _spriteHelpBox.style.display = DisplayStyle.None;
+            string spriteName = _bigSlotFirstTab.Children().ToList()[0].name;
+
+            //Create Game Object
+            GameObject newCharacter = new GameObject();
+
+            //Sprite Renderer
+            SpriteRenderer spriteRenderer = newCharacter.AddComponent<SpriteRenderer>();
+            Sprite sprite = Resources.Load<Sprite>("Characters_Sprite/" + spriteName);
+            if (sprite != null) { spriteRenderer.sprite = sprite; }
+            spriteRenderer.sortingLayerName = "Player";
+
+            //Animator Controller
+            Animator animator = newCharacter.AddComponent<Animator>();
+            string removedName = spriteName.Substring(4);
+            string newName = "animator_" + removedName;
+            UnityEditor.Animations.AnimatorController animController = Resources.Load<UnityEditor.Animations.AnimatorController>("Animators/" + newName);
+            animator.runtimeAnimatorController = animController;
+
+            //collider
+            newCharacter.AddComponent<CapsuleCollider2D>();
+
+            //NPC OR PLAYER 
+            if (_isNPC) {
+                //tag
+                newCharacter.tag = "Enemy";
+                //script
+                EnemyController controller = newCharacter.AddComponent<EnemyController>();
+                controller.isMelee = _isMelee;
+                controller.isPattrol = _isPattrol;
+
+                CircleCollider2D circleCollider = newCharacter.AddComponent<CircleCollider2D>();
+                circleCollider.isTrigger = true;
+
+                //exclude layers in collision
+                int layermask = ( ( 1 << 8 ) | ( 1 << 9 ) );
+                circleCollider.excludeLayers = layermask;
+
+                //collider radius
+                if (_isMelee) {
+                    //collider
+                    circleCollider.radius = 2.25f;
+                }
+                else {
+                    //collider
+                    circleCollider.radius = 4.03f;
+                }
+            }
+            else {
+                //script
+                newCharacter.AddComponent<PlayerMovement>();
+
+                //tag
+                newCharacter.tag = "Player";
+
+                //rigidbody
+                Rigidbody2D rb2D = newCharacter.AddComponent<Rigidbody2D>();
+                rb2D.isKinematic = true;
+
+                //cameraChild
+                GameObject cam = Resources.Load<GameObject>("Main Camera");
+                GameObject instantiatedCam = (GameObject)PrefabUtility.InstantiatePrefab(cam);
+
+                instantiatedCam.transform.parent = newCharacter.transform;
+
+                //canvas child
+                GameObject canvas = Resources.Load<GameObject>("Canvas");
+                GameObject instancedCanvas = (GameObject)PrefabUtility.InstantiatePrefab(canvas);
+
+                instancedCanvas.transform.parent = newCharacter.transform;
+            }
+
+            //slash child
+            if (( _isNPC && _isMelee ) || !_isNPC) {
+                GameObject slash = Resources.Load<GameObject>("Slash");
+                GameObject insatantiatedSlash = (GameObject)PrefabUtility.InstantiatePrefab(slash);
+
+                insatantiatedSlash.transform.parent = newCharacter.transform;
+            }
+
+            //Save as a prefab
+            if (!_isNPC) { removedName = "Player_" + removedName; }
+            string path = "Assets/Prefabs/Characters/" + removedName + ".prefab";
+            path = AssetDatabase.GenerateUniqueAssetPath(path);
+            GameObject newGameObject = PrefabUtility.SaveAsPrefabAsset(newCharacter, path);
+            AssetDatabase.SaveAssets();
+
+            //Destroy temporary GameObject
+            DestroyImmediate(newCharacter);
+
+            //ping the new character
+            EditorGUIUtility.PingObject(newGameObject);
+
+        }
+
+    }
     private void createCustomCharacter() {
         GameObject newCharacter = new GameObject("NewNPC");
         newCharacter.tag = "NPC";

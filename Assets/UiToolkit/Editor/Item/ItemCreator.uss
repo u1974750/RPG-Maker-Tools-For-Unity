@@ -103,9 +103,12 @@ Button:checked{
 Button:disabled{
        background-color: default;
        text-color: #EEEEEE;
-       opacity: 100%;
+       opacity: 1;
 }
 Button:hover{
     background-color: #b9b5c9; 
     border-color: #5c5676;
+}
+ScrollView{
+    height: 90%;
 }

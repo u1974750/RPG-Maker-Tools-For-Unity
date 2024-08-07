@@ -1,7 +1,9 @@
 using NG.Elements;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.PerformanceData;
 using System.IO;
+using System.Management.Instrumentation;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -87,8 +89,9 @@ public class DungeonBuilderTutorialController : EditorWindow
 
         TextElement txt1 = new TextElement() {
             text = "First things first, press this button to create a Room Prefab." +
-                                                      "Open the prefab, and you will see different players already prepared." +
-                                                      "Use the Tile Palette to create your room however you like!"
+                                                      "OPEN THE PREFAB, and you will see different layers in the hierarchy already prepared." +
+                                                      "Use the Tile Palette to create your room however you like! The only thing you need to have in mind is that the room " +
+                                                      "NEEDs to have 4 doors, one each direction."
         };
         txt1.AddToClassList("simple-text");
         box.Add(txt1);
@@ -221,8 +224,8 @@ public class DungeonBuilderTutorialController : EditorWindow
 
         TextElement txt1 = new TextElement() {
             text = "Great, we are almost done!\n" +
-                   "on the scene inspector you will find the GameManager object, inside there is a field called " +
-                   "\"Dungeon Level List\", you can drag there the level you just created. The order will indicate the game level orders." +
+                   "On the scene inspector you will find the GameManager object, inside there is a field called " +
+                   "\"Dungeon Level List\", you can drag there the level you just created. The order will indicate the game level orders. \n" +
                    "If you want to test it, make sure the \"Current Dungeon Level\" is set to the same number as your level element number."
         };
         txt1.AddToClassList("simple-text");
@@ -286,13 +289,22 @@ public class DungeonBuilderTutorialController : EditorWindow
             GameObject prefab = Resources.Load<GameObject>("GameManager");
             if(prefab != null) {
                 GameObject instantiatedPrefab = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+                instantiatedPrefab.name = "GameManager";
+                EditorGUIUtility.PingObject(instantiatedPrefab);
+
             }
             else {
-                Debug.Log("Error getting the prefab");
+                Debug.LogWarning("Error getting the prefab");
             }
         }
         else {
-            Debug.Log("You already have one Game Manager!");
+            Debug.LogWarning("You already have one Game Manager!");
+        }
+
+        if (GameObject.Find("DungeonBuilder") == null) {
+            GameObject dungeonBuilder = new GameObject("DungeonBuilder");
+            dungeonBuilder.AddComponent<DungeonBuilder>();
+
         }
 
     }

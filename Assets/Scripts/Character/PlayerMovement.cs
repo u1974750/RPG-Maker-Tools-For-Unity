@@ -123,6 +123,12 @@ public class PlayerMovement : MonoBehaviour
                         aux.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = " Q ";
                         hasItem = true;
                         itemTime = item.GetComponent<Item>().GetItemTime();
+
+                        Item itemAttributes = item.GetComponent<Item>();
+                        modifiedStats.armourValue = itemAttributes.GetArmour();
+                        modifiedStats.speedValue = itemAttributes.GetSpeed();
+                        modifiedStats.strenghtValue = itemAttributes.GetStrenght();
+                        modifiedStats.healthValue = itemAttributes.GetHealth();
                     }
 
                 }
@@ -133,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
     private void UseItem() {
         usingItem = true;
         hasItem = false;
-        modifiedStats = item.GetComponent<Item>().itemValues;
+        //modifiedStats = item.GetComponent<Item>().itemValues;
         
         if(modifiedStats.healthValue != 0) {
             Debug.Log("Enter");
@@ -141,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
 
             currentHealth += modifiedStats.healthValue;
 
-            _canvas.GetComponent<CanvasController>().AddLife(modifiedStats.healthValue);
+            _canvas.GetComponent<CanvasController>().ModifyHealthUI(modifiedStats.healthValue);
 
 
         }
@@ -173,10 +179,6 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(0.05f);
 
         _spriteRenderer.color = Color.white;
-    }
-
-    private void UpdateCanvasHealth() {
-
     }
 
     private void Die() {

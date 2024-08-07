@@ -11,6 +11,7 @@ public class CanvasController : MonoBehaviour
     private List<GameObject> _hearts;
 
     private void Awake() {
+        _life = _maxLife;
         _hearts = new List<GameObject>();
         GameObject aux = gameObject.transform.GetChild(0).gameObject;
         for (int i = 0; i < aux.transform.childCount; i++) {
@@ -21,17 +22,21 @@ public class CanvasController : MonoBehaviour
     }
 
     public void RemoveLife(int num) {
-
-    }
-
-    public void AddLife(int num) {
-        Debug.Log("hy" + num);
-        if (num < 0) {
-            _maxLife += num;
-            for (int i = num; i < 0; i++) {
+        _maxLife += num;
+        for (int i = num; i < 0; i++) {
+            if (_hearts[_life - 1] != null) {
                 _hearts[_life - 1].GetComponent<Image>().color = Color.gray;
                 _life--;
             }
+        }
+    }
+
+    public void ModifyHealthUI(int num) {
+        if (num < 0) {
+            RemoveLife(num);
+        }
+        else {
+            NewHearts(num);
         }
     }
 

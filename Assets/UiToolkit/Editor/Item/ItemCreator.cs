@@ -1,20 +1,18 @@
 using System.Linq;
 using UnityEditor;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 using Label = UnityEngine.UIElements.Label;
-using UnityEditor.UIElements;
 
 
 public class ItemCreator : EditorWindow
 {
 
     private VisualElement root;
+    private ScrollView scrollView;
     private HelpBox noSpriteHelpBox;
     private HelpBox noDurationHelpBox;
-    private bool showingError = false;
     private List<ToggleButtonGroup> buttonGroups = new List<ToggleButtonGroup>();
     private GroupBox timeGroupBox;
     private VisualElement bigSlot;
@@ -55,15 +53,21 @@ public class ItemCreator : EditorWindow
         windowTitle.AddToClassList("main-title");
         root.Add(windowTitle);
 
+        //scroll view
+
+        scrollView = new ScrollView(ScrollViewMode.Vertical);
+        scrollView.SetEnabled(true);
+        root.Add(scrollView);
+
         //h2
         Label propertiesLabel = new Label("Item Properties");
         propertiesLabel.AddToClassList("h2-title");
-        root.Add(propertiesLabel);
+        scrollView.Add(propertiesLabel);
 
         //Alignment box
         VisualElement topBox = new VisualElement();
         topBox.AddToClassList("alignment-box");
-        root.Add(topBox);
+        scrollView.Add(topBox);
 
         //Big Slot
         bigSlot = new VisualElement() { name = "bigSlot" };
@@ -138,7 +142,7 @@ public class ItemCreator : EditorWindow
     private void CreateBottomPart() {
         //container
         VisualElement containerBox = new VisualElement() { name = "ContainterBox"};
-        root.Add(containerBox);
+        scrollView.Add(containerBox);
 
         //h2
         Label propertiesLabel = new Label("Item Effects");
@@ -154,7 +158,7 @@ public class ItemCreator : EditorWindow
         //Create Button
         Button createButton = new Button(CreateItem);
         createButton.text = "Create Item";
-        createButton.style.marginTop = 50f;
+        createButton.style.marginTop = 30f;
         //createButton.SetEnabled(false);
         containerBox.Add(createButton);
     }
