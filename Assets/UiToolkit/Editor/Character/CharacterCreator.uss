@@ -39,7 +39,7 @@
     -unity-text-align : middle-center;
     margin-top: 5%;
     font-size: 20px;
-    color: rgb(167, 159, 200);
+    color: rgb(108, 93, 162);
 }
 
 .alignment-box{
@@ -56,12 +56,19 @@ ToggleButtonGroup{
 }
 Button:checked{
     background-color: rgb(132, 125, 161);
+     border-color: rgb(104, 96, 133);
+}
+Button:active{
+    background-color: rgb(132, 125, 161);
+    border-color: rgb(104, 96, 133);
+}
+Button:focus{    
+    border-color: rgb(104, 96, 133);
 }
 
 HelpBox{
     font-size: 14px;
 }
 Button{
-    margin-top: 3%;
-    
+    margin-top: 3%;    
 }

@@ -1,13 +1,12 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using System.Collections.Generic;
 using Label = UnityEngine.UIElements.Label;
 
 
-public class ItemCreator : EditorWindow
-{
+public class ItemCreator : EditorWindow {
 
     private VisualElement root;
     private ScrollView scrollView;
@@ -25,8 +24,7 @@ public class ItemCreator : EditorWindow
     private int speedValue = 0;
 
     [MenuItem("Character Creator/Item Creator")]
-    public static void OpwnItemWindow()
-    {
+    public static void OpwnItemWindow() {
         ItemCreator wnd = GetWindow<ItemCreator>();
         wnd.titleContent = new GUIContent("ItemCreator");
     }
@@ -79,7 +77,7 @@ public class ItemCreator : EditorWindow
         columnBox.AddToClassList("column_box_alignment");
 
         //Item info
-        itemName = new TextField(label: "• Item Name") { name = "ItemName"};
+        itemName = new TextField(label: "• Item Name") { name = "ItemName" };
         columnBox.Add(itemName);
 
         //Item name Child
@@ -87,7 +85,7 @@ public class ItemCreator : EditorWindow
         aux.style.paddingLeft = 20f;
 
         //Item Sprite
-        UnityEditor.UIElements.ObjectField itemSprite = new UnityEditor.UIElements.ObjectField() { name = "ItemSprite"};
+        UnityEditor.UIElements.ObjectField itemSprite = new UnityEditor.UIElements.ObjectField() { name = "ItemSprite" };
         itemSprite.objectType = typeof(Sprite);
         itemSprite.label = "• Item Sprite";
         columnBox.Add(itemSprite);
@@ -97,7 +95,7 @@ public class ItemCreator : EditorWindow
             StyleBackground backgroundImage = new StyleBackground(i);
             actualItemSprite = i;
 
-            if(bigSlot.childCount != 0) {
+            if (bigSlot.childCount != 0) {
                 bigSlot.Clear();
             }
 
@@ -110,9 +108,9 @@ public class ItemCreator : EditorWindow
             };
             aux.AddToClassList("object");
             bigSlot.Add(aux);
-            
+
         });
-        
+
         //itemSprite child
         aux = itemSprite.Children().ToList()[0];
         aux.style.paddingLeft = -18f;
@@ -129,7 +127,7 @@ public class ItemCreator : EditorWindow
         RadioButton timeButton1 = new RadioButton("30  seconds");
         timeButton1.value = true;
         timeGroupBox.Add(timeButton1);
-        
+
         RadioButton timeButton2 = new RadioButton("1  minute");
         timeGroupBox.Add(timeButton2);
 
@@ -141,7 +139,7 @@ public class ItemCreator : EditorWindow
 
     private void CreateBottomPart() {
         //container
-        VisualElement containerBox = new VisualElement() { name = "ContainterBox"};
+        VisualElement containerBox = new VisualElement() { name = "ContainterBox" };
         scrollView.Add(containerBox);
 
         //h2
@@ -150,10 +148,10 @@ public class ItemCreator : EditorWindow
         containerBox.Add(propertiesLabel);
 
         //Buttons
-        buttonGroups.Add(CreateButtonGroup(0, "Health",   containerBox));
-        buttonGroups.Add(CreateButtonGroup(1, "Armour",   containerBox));
+        buttonGroups.Add(CreateButtonGroup(0, "Health", containerBox));
+        buttonGroups.Add(CreateButtonGroup(1, "Armour", containerBox));
         buttonGroups.Add(CreateButtonGroup(2, "Strenght", containerBox));
-        buttonGroups.Add(CreateButtonGroup(3, "Speed",    containerBox));
+        buttonGroups.Add(CreateButtonGroup(3, "Speed", containerBox));
 
         //Create Button
         Button createButton = new Button(CreateItem);
@@ -172,14 +170,14 @@ public class ItemCreator : EditorWindow
         noDurationHelpBox.style.display = DisplayStyle.None;
         root.Add(noDurationHelpBox);
     }
-    
+
     private ToggleButtonGroup CreateButtonGroup(int i, string name, VisualElement container) {
         string symbol = "";
 
         switch (i) {
-            case 0: symbol = "\u2665";     break; //health
+            case 0: symbol = "\u2665"; break; //health
             case 1: symbol = "\U0001F6E1"; break; //armour
-            case 2: symbol = "\u2694";     break; //strength
+            case 2: symbol = "\u2694"; break; //strength
             case 3: symbol = "\U0001F97E"; break; //speed
         }
 
@@ -215,13 +213,13 @@ public class ItemCreator : EditorWindow
 
     private void SetActiveButton(int category, int val) {
         if (val < -3) val = -3;
-        if(val > 3) val = 3;   
+        if (val > 3) val = 3;
 
         switch (category) {
-            case 0: healthValue = val;   break;
-            case 1: armourValue = val;   break;
+            case 0: healthValue = val; break;
+            case 1: armourValue = val; break;
             case 2: strenghtValue = val; break;
-            case 3: speedValue = val;    break;
+            case 3: speedValue = val; break;
             default: break;
         }
     }
@@ -263,7 +261,7 @@ public class ItemCreator : EditorWindow
         if (CanCreateItem()) {
 
             GameObject newItem = new GameObject();
-            
+
             Item itemScript = newItem.AddComponent<Item>();
 
             string name = "My new Item";
@@ -278,7 +276,7 @@ public class ItemCreator : EditorWindow
                 if (timeButton.value) {
                     if (i == 0) { time = 30f; break; }
                     else if (i == 1) { time = 60f; break; }
-                    else if (i == 2) { time = 180f; break; }                   
+                    else if (i == 2) { time = 180f; break; }
                 }
             }
             itemScript.SetItemTime(time);
@@ -287,7 +285,7 @@ public class ItemCreator : EditorWindow
 
 
             //Save as a prefab
-            
+
             string path = "Assets/Prefabs/Items/" + name + ".prefab";
             path = AssetDatabase.GenerateUniqueAssetPath(path);
             GameObject newGameObject = PrefabUtility.SaveAsPrefabAsset(newItem, path);

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,12 +6,12 @@ using UnityEngine.UIElements;
 public class DragAndDropManipulator : PointerManipulator {
 
 
-    private DragAndDropWindow dad_Window;
+    private CharacterCreator dad_Window;
     private bool _clothes;
 
     // Write a constructor to set target and store a reference to the
     // root of the visual tree.
-    public DragAndDropManipulator(VisualElement target, DragAndDropWindow dad_Window, VisualElement root) {
+    public DragAndDropManipulator(VisualElement target, CharacterCreator dad_Window, VisualElement root) {
         this.target = target;
         this.root = root;
         this.dad_Window = dad_Window;
@@ -134,7 +133,7 @@ public class DragAndDropManipulator : PointerManipulator {
             List<VisualElement> childObject = dad_Window.BigSlotSecondTab.Children().ToList();
 
             for (int i = 0; i < dad_Window.BigSlotSecondTab.childCount; i++) {
-                
+
                 string[] childNames = childObject[i].name.Split("_");
 
                 if (childNames[childNames.Length - 1] == targetNames[targetNames.Length - 1]) {

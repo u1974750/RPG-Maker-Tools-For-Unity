@@ -1,16 +1,9 @@
 using NG.Elements;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.PerformanceData;
-using System.IO;
-using System.Management.Instrumentation;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class DungeonBuilderTutorialController : EditorWindow
-{
+public class DungeonBuilderTutorialController : EditorWindow {
     [SerializeField] private StyleSheet _styleSheet;
     [MenuItem("Dungeon Builder/Open Tile Palette")]
     public static void OpenTilePalette() {
@@ -52,7 +45,7 @@ public class DungeonBuilderTutorialController : EditorWindow
         VisualElement _root;
         _root = rootVisualElement;
 
-        if(_styleSheet != null) {  _root.styleSheets.Add(_styleSheet); }
+        if (_styleSheet != null) { _root.styleSheets.Add(_styleSheet); }
 
         Label mainTitle = new Label("~ ROOM BUILDER TUTORIAL ~");
         mainTitle.AddToClassList("main-title");
@@ -66,8 +59,10 @@ public class DungeonBuilderTutorialController : EditorWindow
         introText.AddToClassList("simple-text");
         _scrollView.Add(introText);
 
-        TextElement text1 = new TextElement(){text = "In here you can follow step by step the tutorial, " +
-                                                     "ending up with a custom dungeon level!"};
+        TextElement text1 = new TextElement() {
+            text = "In here you can follow step by step the tutorial, " +
+                                                     "ending up with a custom dungeon level!"
+        };
         text1.AddToClassList("simple-text");
         _scrollView.Add(text1);
 
@@ -100,7 +95,7 @@ public class DungeonBuilderTutorialController : EditorWindow
         txt2.AddToClassList("tutorial-small-helpbox");
         box.Add(txt2);
 
-        Button btn1 = new Button(DuplicateRoomPrefab) { text = "Create Room Prefab"};
+        Button btn1 = new Button(DuplicateRoomPrefab) { text = "Create Room Prefab" };
         box.Add(btn1);
 
         sv.Add(box);
@@ -125,7 +120,7 @@ public class DungeonBuilderTutorialController : EditorWindow
         box.Add(txt2);
 
         HelpBox txt1 = new HelpBox("S.O. means Scriptable Object, you can use the default scriptable " +
-                                   "object created for this project or fill the Room Builder tool to auto create it", 
+                                   "object created for this project or fill the Room Builder tool to auto create it",
                                    HelpBoxMessageType.None);
         txt1.AddToClassList("tutorial-small-helpbox");
         box.Add(txt1);
@@ -161,7 +156,7 @@ public class DungeonBuilderTutorialController : EditorWindow
                                    HelpBoxMessageType.None);
         txt2.AddToClassList("tutorial-small-helpbox");
         box.Add(txt2);
-        
+
         HelpBox txt3 = new HelpBox("You can create multiple rooms of the same type, for example various Small Rooms, later on " +
                                    "you will select which ones you want for this specific node graph",
                                    HelpBoxMessageType.None);
@@ -285,9 +280,9 @@ public class DungeonBuilderTutorialController : EditorWindow
     }
 
     private void NewGameManager() {
-        if(GameObject.Find("GameManager") == null) {
+        if (GameObject.Find("GameManager") == null) {
             GameObject prefab = Resources.Load<GameObject>("GameManager");
-            if(prefab != null) {
+            if (prefab != null) {
                 GameObject instantiatedPrefab = Instantiate(prefab, Vector3.zero, Quaternion.identity);
                 instantiatedPrefab.name = "GameManager";
                 EditorGUIUtility.PingObject(instantiatedPrefab);

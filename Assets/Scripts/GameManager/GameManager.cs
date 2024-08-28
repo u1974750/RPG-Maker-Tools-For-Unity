@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class GameManager : SingletonMonobehaviour<GameManager>
-{
+public class GameManager : SingletonMonobehaviour<GameManager> {
     [Space(10)]
     [Header("DUNGEON LEVELS")]
 
@@ -20,17 +17,15 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
 
     // Start is called before the first frame update
-    private void Start()
-    {
+    private void Start() {
         gameState = GameState.gameStarted;
     }
 
     // Update is called once per frame
-    private void Update()
-    {
+    private void Update() {
         HandleGameState();
 
-        //FOR TESTING!!         
+      
         if (Input.GetKeyDown(KeyCode.R)) {
             gameState = GameState.gameStarted;
         }
@@ -56,7 +51,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     #region VALIDATION
 #if UNITY_EDITOR
     private void OnValidate() {
-        HelperUtilities.ValidateCheckEnumerableValues(this,nameof(dungeonLevelList), dungeonLevelList);
+        HelperUtilities.ValidateCheckEnumerableValues(this, nameof(dungeonLevelList), dungeonLevelList);
     }
 #endif
     #endregion

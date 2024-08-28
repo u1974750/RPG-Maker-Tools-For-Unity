@@ -1159,7 +1159,7 @@ Transform:
   m_GameObject: {fileID: 1324022153}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.8324931, y: 2.6226983, z: -284.05704}
+  m_LocalPosition: {x: 7.76, y: 3.22, z: -284.05704}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1528,6 +1528,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NewNPC
       objectReference: {fileID: 0}
+    - target: {fileID: 3034510252934865046, guid: 29cad4a4b30b154499ecbb485274e32b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3990066306771849921, guid: 29cad4a4b30b154499ecbb485274e32b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.87
@@ -1745,7 +1749,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1871947690
 Transform:
   m_ObjectHideFlags: 0
@@ -2046,7 +2050,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7094176580566326515, guid: ef633149787e4cc4bad9d4a0c25137a5, type: 3}
       propertyPath: dungeonLevelList.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7094176580566326515, guid: ef633149787e4cc4bad9d4a0c25137a5, type: 3}
       propertyPath: 'dungeonLevelList.Array.data[0]'
@@ -2055,7 +2059,7 @@ PrefabInstance:
     - target: {fileID: 7094176580566326515, guid: ef633149787e4cc4bad9d4a0c25137a5, type: 3}
       propertyPath: 'dungeonLevelList.Array.data[1]'
       value: 
-      objectReference: {fileID: 11400000, guid: d40d0a25a66049d468b59eac4491adee, type: 2}
+      objectReference: {fileID: 11400000, guid: 85eabf10e7bfc78438d3ced70bb6405d, type: 2}
     - target: {fileID: 7347635447120274366, guid: ef633149787e4cc4bad9d4a0c25137a5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

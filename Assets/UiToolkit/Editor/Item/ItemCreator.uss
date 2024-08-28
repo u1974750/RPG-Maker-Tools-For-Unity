@@ -3,7 +3,7 @@
     -unity-text-align : middle-center;
     margin-top: 5%;
     font-size: 20px;
-    color: rgb(167, 159, 200);
+    color: rgb(108, 93, 162);
 }
 
 .h2-title{
@@ -11,7 +11,7 @@
     -unity-text-align : middle-center;
     margin-top: 5%;
     font-size: 15px;
-    color: rgb(167, 159, 200);
+    color: rgb(108, 93, 162);
 }
 
 .alignment-box{
@@ -47,11 +47,11 @@
     width: 80px;
 }
 .label-button:checked{
-    background-color: #383838;
+    background-color: #666666;
     border-color: #262626;
 }
 .label-button:hover{
-    background-color: #666666;
+    background-color: #737373;
     border-color: #262626;
 }
 

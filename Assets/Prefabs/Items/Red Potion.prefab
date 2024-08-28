@@ -47,7 +47,7 @@ MonoBehaviour:
   itemSprite: {fileID: -7371509505491802261, guid: a5eb69b5a9249344cbf11e8cf501c2ae, type: 3}
   itemName: Red Potion
   itemTime: 30
-  speedValue: -2
-  healthValue: -2
-  armourValue: 1
-  strenghtValue: -1
+  speedValue: 0
+  healthValue: 2
+  armourValue: 0
+  strenghtValue: 0

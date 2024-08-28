@@ -1,11 +1,9 @@
 using NG.Elements;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "DungeonLevel_", menuName = "Scriptable Objects/Dungeon/Dungeon Level")]
-public class DungeonLevelSO : ScriptableObject
-{
+public class DungeonLevelSO : ScriptableObject {
     [Space(10)]
     [Header("BASIC LEVEL DETAILS")]
     [Tooltip("The name of the level")] public string levelName;
@@ -15,7 +13,8 @@ public class DungeonLevelSO : ScriptableObject
     [Tooltip("Populate the list with the room templates that you want to be part of the level")]
     public List<RoomTemplateSO> roomTemplateList;
 
-    [Space(10)][Header("ROOM NODE GRAPHS FOR LEVEL")] 
+    [Space(10)]
+    [Header("ROOM NODE GRAPHS FOR LEVEL")]
     public List<RoomNodeGraphSO> roomNodeGraphList;
 
     #region Validation
@@ -39,15 +38,15 @@ public class DungeonLevelSO : ScriptableObject
         foreach (RoomTemplateSO roomTemplate in roomTemplateList) {
             if (roomTemplate == null) return;
             if (roomTemplate.roomNodeType.isCorridorEW) isHorizontalCorridor = true;
-            if(roomTemplate.roomNodeType.isCorridorNS) isVerticalCorridor = true;
-            if(roomTemplate.roomNodeType.isEntrance) isEntrance = true;
+            if (roomTemplate.roomNodeType.isCorridorNS) isVerticalCorridor = true;
+            if (roomTemplate.roomNodeType.isEntrance) isEntrance = true;
         }
 
-        if(isHorizontalCorridor == false) {
+        if (isHorizontalCorridor == false) {
             //MISSATGE ERROR FALTA HORIZONTAL CORRIDOR!!!
             Debug.LogWarning("FALTA PASSADIS HORITZONTAL");
         }
-        if( isVerticalCorridor == false) {
+        if (isVerticalCorridor == false) {
             //MISSATGE ERROR FALTA VERTICAL CORRIDOR!!! 
             Debug.LogWarning("FALTA PASSADIS VERTICAL");
         }
@@ -59,28 +58,28 @@ public class DungeonLevelSO : ScriptableObject
         foreach (RoomNodeGraphSO roomNodeGraph in roomNodeGraphList) {
             if (roomNodeGraph == null) return;
 
-            foreach(RoomNodeSO roomNode in roomNodeGraph.roomNodeList) {
-                if(roomNode == null) continue;
+            foreach (RoomNodeSO roomNode in roomNodeGraph.roomNodeList) {
+                if (roomNode == null) continue;
 
                 //check that a room template has been specified for each roomNode type
-                
+
                 //corridors and entrance already checked
-                if(roomNode.roomNodeType.isEntrance || roomNode.roomNodeType.isCorridorEW || roomNode.roomNodeType.isCorridorNS 
+                if (roomNode.roomNodeType.isEntrance || roomNode.roomNodeType.isCorridorEW || roomNode.roomNodeType.isCorridorNS
                     || roomNode.roomNodeType.isCorridor || roomNode.roomNodeType.isNone) {
                     continue;
                 }
 
                 bool isRoomNodeTypeFound = false;
-                foreach(RoomTemplateSO roomTemplateSO in roomTemplateList) {
-                    if( roomTemplateSO == null) continue;
+                foreach (RoomTemplateSO roomTemplateSO in roomTemplateList) {
+                    if (roomTemplateSO == null) continue;
 
-                    if(roomTemplateSO.roomNodeType == roomNode.roomNodeType) {
+                    if (roomTemplateSO.roomNodeType == roomNode.roomNodeType) {
                         isRoomNodeTypeFound = true;
                         break;
                     }
                 }
 
-                if(!isRoomNodeTypeFound) Debug.LogWarning(" There is no Room Template found for the node graph"); // TREURE WARNING!!
+                if (!isRoomNodeTypeFound) Debug.LogWarning(" There is no Room Template found for the node graph");
             }
 
         }

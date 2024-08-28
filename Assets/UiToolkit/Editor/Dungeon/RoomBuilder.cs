@@ -1,15 +1,13 @@
-using System;
+using NG.Elements;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using NG.Elements;
-using System.Linq;
 
-public class RoomBuilder : EditorWindow
-{
-    
+public class RoomBuilder : EditorWindow {
+
     //private VisualTreeAsset _VisualTreeAsset = default;
     private VisualElement _root;
     private List<HelpBox> helpBoxes = new List<HelpBox>();
@@ -21,8 +19,7 @@ public class RoomBuilder : EditorWindow
     [SerializeField] private Texture2D _doorSprite;
 
     [MenuItem("Dungeon Builder/Room Builder")]
-    public static void OpenRoomBuilderWindow()
-    {        
+    public static void OpenRoomBuilderWindow() {
         RoomBuilder wnd = GetWindow<RoomBuilder>();
         wnd.titleContent = new GUIContent("RoomBuilder");
     }
@@ -63,8 +60,7 @@ public class RoomBuilder : EditorWindow
 
     }
 
-    private void CreateAssetButtonAction()
-    {
+    private void CreateAssetButtonAction() {
         List<VisualElement> childrenList = _foldout.Children().ToList();
 
         RoomTemplateSO newRoom = ScriptableObject.CreateInstance<RoomTemplateSO>();
@@ -76,23 +72,23 @@ public class RoomBuilder : EditorWindow
         var roomTypeInput = (PopupField<RoomNodeTypeSO>)childrenList[2];
         newRoom.roomNodeType = roomTypeInput.value;
 
-        Vector2IntField lowerBoundInput = (Vector2IntField) childrenList[4];
+        Vector2IntField lowerBoundInput = (Vector2IntField)childrenList[4];
         newRoom.lowerBounds = lowerBoundInput.value;
 
-        Vector2IntField upperBoundInput = (Vector2IntField) childrenList[6];
+        Vector2IntField upperBoundInput = (Vector2IntField)childrenList[6];
         newRoom.upperBounds = upperBoundInput.value;
 
 
         List<VisualElement> doorwayTabs = childrenList[8].Children().ToList()[0].Children().ToList();
         newRoom.doorwayList = new List<Doorway>();
 
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             List<VisualElement> doorWay = doorwayTabs[i].Children().ToList();
             Doorway newDoorway = new Doorway();
 
             EnumField doorOrientation = (EnumField)doorWay[0];
             newDoorway.orientation = (RoomOrientation)doorOrientation.value;
-            
+
             Vector2IntField doorPos = (Vector2IntField)doorWay[1];
             newDoorway.position = doorPos.value;
 
@@ -108,13 +104,13 @@ public class RoomBuilder : EditorWindow
             newRoom.doorwayList.Add(newDoorway);
         }
 
-        
+
         AssetDatabase.CreateAsset(newRoom, path);
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         EditorUtility.FocusProjectWindow();
         Selection.activeObject = newRoom;
-        
+
 
     }
 
@@ -123,11 +119,11 @@ public class RoomBuilder : EditorWindow
 
         var box = new Box();
         box.AddToClassList("doorways-box");
-               
-        var DoorwaysTab = new TabView() { style = { marginTop = 15} }; 
 
-        for(int i = 0; i < 4;  i++) {
-            var door = new Tab("Door " + (i+1), _doorSprite);
+        var DoorwaysTab = new TabView() { style = { marginTop = 15 } };
+
+        for (int i = 0; i < 4; i++) {
+            var door = new Tab("Door " + ( i + 1 ), _doorSprite);
 
             HelpBox doorHelper = new HelpBox("There should be four doorways for a room" +
                 " - one for each compass direction.  These should have a consistent 3 tile opening size," +
@@ -172,7 +168,7 @@ public class RoomBuilder : EditorWindow
             DoorwaysTab.Add(door);
 
         }
-        
+
         box.Add(DoorwaysTab);
         roomTemplateFoldout.Add(box);
         scrollView.Add(roomTemplateFoldout);
@@ -188,7 +184,7 @@ public class RoomBuilder : EditorWindow
         box.AddToClassList("doorways-box");
 
         //tab view
-        var categoriesTab = new TabView() { style = {marginTop = 15} };
+        var categoriesTab = new TabView() { style = { marginTop = 15 } };
 
         //tabs
         #region tab1
@@ -197,7 +193,7 @@ public class RoomBuilder : EditorWindow
         Image image1 = new Image();
 
         Sprite aux = Resources.Load<Sprite>("DungeonBuilderImages/FrontDoor");
-        if(aux == null) {
+        if (aux == null) {
             Debug.Log("cannot find the image");
             return;
         }
@@ -248,7 +244,7 @@ public class RoomBuilder : EditorWindow
     private void RoomTemplateFoldout() {
         Foldout roomTemplateFoldout = new Foldout { text = "1. Room Template", style = { marginRight = 15 } };
 
-        TextField roomName = new TextField() { label = "Room Name: ",style = { marginTop = 10 }};
+        TextField roomName = new TextField() { label = "Room Name: ", style = { marginTop = 10 } };
         roomTemplateFoldout.Add(roomName);
 
         //helpbox
@@ -325,7 +321,7 @@ public class RoomBuilder : EditorWindow
 
         tutorialsToggle.RegisterCallback<ChangeEvent<bool>>((evt) => {
             if (evt.newValue == true) {
-                if(helpBoxes.Count > 0) {
+                if (helpBoxes.Count > 0) {
                     foreach (var box in helpBoxes) {
                         box.style.display = DisplayStyle.Flex;
                     }

@@ -1,13 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(BoxCollider2D))]
-public class InstantiatedRoom : MonoBehaviour
-{
+public class InstantiatedRoom : MonoBehaviour {
     [HideInInspector] public Room room;
     [HideInInspector] public Grid grid;
     [HideInInspector] public Tilemap groundTilemap;
@@ -60,26 +56,26 @@ public class InstantiatedRoom : MonoBehaviour
     /// </summary>
     private void BlockOffUnusedDoorWays() {
         foreach (Doorway doorway in room.doorwayList) {
-            if(doorway.isConnected) {
+            if (doorway.isConnected) {
                 continue;
             }
 
-            if(collisionTilemap != null) {
+            if (collisionTilemap != null) {
                 BlockADoorwayOnTilemapLayer(collisionTilemap, doorway);
             }
-            if(groundTilemap != null) {
+            if (groundTilemap != null) {
                 BlockADoorwayOnTilemapLayer(groundTilemap, doorway);
             }
-            if(wallsTilemap != null) {
+            if (wallsTilemap != null) {
                 BlockADoorwayOnTilemapLayer(wallsTilemap, doorway);
             }
-            if(decoration1Tilemap != null) {
+            if (decoration1Tilemap != null) {
                 BlockADoorwayOnTilemapLayer(decoration1Tilemap, doorway);
             }
-            if(decoration2Tilemap != null) {
+            if (decoration2Tilemap != null) {
                 BlockADoorwayOnTilemapLayer(decoration2Tilemap, doorway);
             }
-            if(frontTilemap != null) {
+            if (frontTilemap != null) {
                 BlockADoorwayOnTilemapLayer(frontTilemap, doorway);
             }
         }
@@ -89,16 +85,16 @@ public class InstantiatedRoom : MonoBehaviour
     /// Block a doorway on a tilemap layer
     /// </summary>
     private void BlockADoorwayOnTilemapLayer(Tilemap tilemap, Doorway doorway) {
-        switch(doorway.orientation) {
+        switch (doorway.orientation) {
             case RoomOrientation.north:
             case RoomOrientation.south:
                 BlockDoorwayHorizontally(tilemap, doorway);
                 break;
             case RoomOrientation.east:
             case RoomOrientation.west:
-                BlockDoorwayVertically(tilemap,doorway);
+                BlockDoorwayVertically(tilemap, doorway);
                 break;
-            case RoomOrientation.none:break;
+            case RoomOrientation.none: break;
         }
     }
 
@@ -113,7 +109,7 @@ public class InstantiatedRoom : MonoBehaviour
                 Matrix4x4 transformMatrix = tilemap.GetTransformMatrix(new Vector3Int(startPosition.x + xPos, startPosition.y - yPos, 0)); //Get rotation of tile being copied
 
                 //copy tile
-                tilemap.SetTile(new Vector3Int(startPosition.x + 1 + xPos, startPosition.y - yPos, 0), 
+                tilemap.SetTile(new Vector3Int(startPosition.x + 1 + xPos, startPosition.y - yPos, 0),
                                                tilemap.GetTile(new Vector3Int(startPosition.x + xPos, startPosition.y - yPos, 0)));
 
                 //set rotation of tile copied

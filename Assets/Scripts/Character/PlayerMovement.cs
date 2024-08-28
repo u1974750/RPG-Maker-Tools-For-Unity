@@ -2,13 +2,12 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
-{
+public class PlayerMovement : MonoBehaviour {
     [SerializeField] int _maxHealth = 4;
     [SerializeField] float _speed = 5.0f;
     [SerializeField] int _attackDamage = 1;
     [SerializeField] int _armour = 0;
-    
+
 
     private SpriteRenderer _spriteRenderer;
     private NPCController NPCInRange;
@@ -27,14 +26,13 @@ public class PlayerMovement : MonoBehaviour
     public Item.ItemValues currentStats;
 
 
-    void Start()
-    {
+    void Start() {
         _canvas = GameObject.Find("Canvas");
         currentHealth = _maxHealth;
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animController = GetComponent<Animator>();
-        foreach( Transform child in transform) {
-            if(child.gameObject.tag == "SlashAttack") {
+        foreach (Transform child in transform) {
+            if (child.gameObject.tag == "SlashAttack") {
                 _slash = child.gameObject;
 
                 _slashAnimator = _slash.GetComponent<Animator>();
@@ -49,17 +47,19 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    void Update()
-    {
+    void Update() {
         Move();
         Attack();
         TakeItem();
+        ItemUsage();
+    }
 
-        if(hasItem && Input.GetKey(KeyCode.Q)) { UseItem(); }
-        if(usingItem) {
+    private void ItemUsage() {
+        if (hasItem && Input.GetKey(KeyCode.Q)) { UseItem(); }
+        if (usingItem) {
             itemTime -= Time.deltaTime;
             _canvas.transform.Find("Container").gameObject.transform.Find("item").gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = GetClockTime(itemTime);
-            if(itemTime  < 0) {
+            if (itemTime < 0) {
                 usingItem = false;
                 _canvas.transform.Find("Container").transform.Find("item").gameObject.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
                 Sprite background = Resources.Load<Sprite>("background");
@@ -78,10 +78,10 @@ public class PlayerMovement : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        if(horizontalInput != 0f || verticalInput != 0f) {
+        if (horizontalInput != 0f || verticalInput != 0f) {
             _animController.SetBool("Walk", true);
 
-            if(horizontalInput > 0f) {
+            if (horizontalInput > 0f) {
                 gameObject.transform.localScale = new Vector3(1, 1, 1);
             }
             else {
@@ -119,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
                         aux = aux.transform.Find("item").gameObject;
 
                         aux.GetComponent<UnityEngine.UI.Image>().sprite = item.GetComponent<Item>().GetItemSprite();
-                        
+
                         aux.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = " Q ";
                         hasItem = true;
                         itemTime = item.GetComponent<Item>().GetItemTime();
@@ -139,10 +139,8 @@ public class PlayerMovement : MonoBehaviour
     private void UseItem() {
         usingItem = true;
         hasItem = false;
-        //modifiedStats = item.GetComponent<Item>().itemValues;
-        
-        if(modifiedStats.healthValue != 0) {
-            Debug.Log("Enter");
+
+        if (modifiedStats.healthValue != 0) {
             currentStats.healthValue += modifiedStats.healthValue;
 
             currentHealth += modifiedStats.healthValue;
@@ -189,7 +187,7 @@ public class PlayerMovement : MonoBehaviour
         isInsideNPCRange = dir;
         NPCInRange = npc;
     }
-    
+
     public void TakeDamage(bool isLeft, int damage) {
         if (isLeft) {
             transform.Translate(new Vector2(0.3f, 0));
@@ -200,7 +198,8 @@ public class PlayerMovement : MonoBehaviour
 
         _spriteRenderer.color = Color.red;
         StartCoroutine(ReturnColorWhite());
-        currentHealth -= damage - currentStats.armourValue;
+        //currentHealth -= damage - currentStats.armourValue;
+        _canvas.GetComponent<CanvasController>().takeDamageUI(damage - currentStats.armourValue);
 
         if (currentHealth <= 0) {
             Die();

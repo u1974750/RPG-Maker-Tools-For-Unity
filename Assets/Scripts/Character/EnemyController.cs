@@ -1,16 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
-public class EnemyController : MonoBehaviour
-{
+public class EnemyController : MonoBehaviour {
     private enum State { Walk, Idle, Attack, Follow };
 
     public bool isMelee;
     public bool isPattrol;
     public int maxHealth = 3;
-    public int damage = 1;
+    public int damage = 3;
     public GameObject[] pattrolPoints;
 
     private int currentHealth;
@@ -25,18 +22,16 @@ public class EnemyController : MonoBehaviour
     private GameObject slash;
     private GameObject bullet;
     private Animator slashAnimator;
+    private bool isIdle = false;
     private bool playerExitRange = false;
     private bool canAttack = true;
-    private bool isIdle = false;
     private float maxFollowCounter = 5f;
     private float followCounter = 5f;
-    private float meleeAttackDistance = 0.1f;
     private float distanceToAttack = 1.05f;
 
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         if (!isMelee) {
             bullet = Resources.Load<GameObject>("Bullet");
             distanceToAttack = 3.5f;
@@ -46,7 +41,7 @@ public class EnemyController : MonoBehaviour
         animator = GetComponent<Animator>();
         maxPattrol = pattrolPoints.Length;
 
-        if(isPattrol)actualState = State.Walk;
+        if (isPattrol) actualState = State.Walk;
         else actualState = State.Idle;
 
         foreach (Transform child in transform) {
@@ -73,14 +68,14 @@ public class EnemyController : MonoBehaviour
                     transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
 
                     if (playerExitRange) {
-                        followCounter -=  1 * Time.deltaTime;
+                        followCounter -= 1 * Time.deltaTime;
 
                         if (followCounter < 0) {
                             actualState = State.Walk;
                         }
                     }
 
-                    
+
                 }
             }
         }
@@ -111,7 +106,7 @@ public class EnemyController : MonoBehaviour
                 isFacingRight = true;
 
             }
-            else if(player.transform.position.x < transform.position.x && isFacingRight) {
+            else if (player.transform.position.x < transform.position.x && isFacingRight) {
                 gameObject.transform.localScale = new Vector3(-1, 1, 1);
                 isFacingRight = false;
             }
@@ -122,7 +117,7 @@ public class EnemyController : MonoBehaviour
     }
 
     private void DistanceAttack() {
-        if(player != null && canAttack) {
+        if (player != null && canAttack) {
             Vector2 fireDirection = new Vector2(player.transform.position.x, player.transform.position.y) - new Vector2(transform.position.x, transform.position.y);
             GameObject newBullet = Instantiate(bullet, transform);
             newBullet.GetComponent<Bullet>().SetDirection(fireDirection);
@@ -175,12 +170,12 @@ public class EnemyController : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if(other.gameObject.tag == "pattrolPoint" && actualState == State.Walk) {
+        if (other.gameObject.tag == "pattrolPoint" && actualState == State.Walk) {
             actualState = State.Idle;
             isIdle = true;
             Idle(false);
         }
-        else if(other.gameObject.tag == "Player") {
+        else if (other.gameObject.tag == "Player") {
             player = other.gameObject;
             if (isMelee) {
                 playerExitRange = false;
@@ -191,9 +186,9 @@ public class EnemyController : MonoBehaviour
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        if(collision.gameObject.tag == "Player") {
+        if (collision.gameObject.tag == "Player") {
             if (isMelee) {
-               playerExitRange = true;
+                playerExitRange = true;
                 actualState = State.Idle;
                 Idle(true);
             }

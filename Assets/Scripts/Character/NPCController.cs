@@ -1,8 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class NPCController : MonoBehaviour
-{
+public class NPCController : MonoBehaviour {
     public string dialogText;
     public GameObject item;
     private GameObject dialogBubble;
@@ -12,8 +11,7 @@ public class NPCController : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Awake()
-    {
+    void Awake() {
         dialogBubble = transform.Find("DialogBubble").gameObject;
         if (dialogBubble != null) {
             GameObject child = dialogBubble.transform.Find("Background").gameObject;
@@ -25,36 +23,33 @@ public class NPCController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
-        if(collision.gameObject.tag == "Player") {
+        if (collision.gameObject.tag == "Player") {
             collision.GetComponent<PlayerMovement>().NPCRangeInteract(true, this);
             if (dialogText != "") {
                 dialogBubble.SetActive(true);
                 dialogTextComponent.text = dialogText;
-                
+
                 dialogBubbleSprite.size = new Vector2(
                                               dialogTextComponent.gameObject.GetComponent<RectTransform>().sizeDelta.x + 0.5f,
                                               dialogTextComponent.gameObject.GetComponent<RectTransform>().sizeDelta.y + 0.5f);
-                
+
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision) {
-        if(collision.gameObject.tag == "Player") {
+        if (collision.gameObject.tag == "Player") {
             dialogBubble.SetActive(false);
             collision.GetComponent<PlayerMovement>().NPCRangeInteract(false, this);
         }
     }
 
     public GameObject GiveItem() {
-        Debug.Log( item.GetComponent<Item>().GetItemName());
-
         hasItem = false;
         return item;
     }

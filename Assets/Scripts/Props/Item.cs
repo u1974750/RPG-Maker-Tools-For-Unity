@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Item : MonoBehaviour
-{
+public class Item : MonoBehaviour {
     public struct ItemValues {
         public int healthValue;
         public int armourValue;
@@ -11,7 +8,7 @@ public class Item : MonoBehaviour
         public float speedValue;
     }
 
-    [Header ("UI Properties")]
+    [Header("UI Properties")]
     public Sprite itemSprite;
     public string itemName;
     public float itemTime;
@@ -32,10 +29,10 @@ public class Item : MonoBehaviour
     }
     public void SetItemSprite(Sprite spr) { itemSprite = spr; }
     public void SetItemName(string name) { itemName = name; }
-    public void SetItemTime(float time) {  itemTime = time; }
+    public void SetItemTime(float time) { itemTime = time; }
 
 
-    public Sprite GetItemSprite() { return  itemSprite; }
+    public Sprite GetItemSprite() { return itemSprite; }
     public string GetItemName() { return itemName; }
     public float GetItemTime() { return itemTime; }
 

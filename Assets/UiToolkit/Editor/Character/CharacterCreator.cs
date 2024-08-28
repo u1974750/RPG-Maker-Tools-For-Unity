@@ -1,11 +1,11 @@
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.UIElements;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEditor.Search;
+using UnityEngine;
+using UnityEngine.UIElements;
 
-public class DragAndDropWindow : EditorWindow {
+public class CharacterCreator : EditorWindow {
 
     private List<VisualElement> _slots = new List<VisualElement>();
     private VisualElement _bigSlotFirstTab;
@@ -27,7 +27,7 @@ public class DragAndDropWindow : EditorWindow {
     [MenuItem("Character Creator/Pattrol Point")]
     public static void CreatePattrolPoint() {
         GameObject pattrolPoint = Resources.Load<GameObject>("PattrolPoint");
-        GameObject instancedPattrolPoint = (GameObject) PrefabUtility.InstantiatePrefab(pattrolPoint);
+        GameObject instancedPattrolPoint = (GameObject)PrefabUtility.InstantiatePrefab(pattrolPoint);
 
         EditorGUIUtility.PingObject(instancedPattrolPoint);
 
@@ -35,7 +35,7 @@ public class DragAndDropWindow : EditorWindow {
 
     [MenuItem("Character Creator/Character Creator")]
     public static void OpenCharacterWindow() {
-        DragAndDropWindow wnd = GetWindow<DragAndDropWindow>();
+        CharacterCreator wnd = GetWindow<CharacterCreator>();
         wnd.titleContent = new GUIContent("Character Creator");
     }
 
@@ -43,7 +43,7 @@ public class DragAndDropWindow : EditorWindow {
         // Each editor window contains a root VisualElement object
         VisualElement root = rootVisualElement;
         var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>
-                         ("Assets/UiToolkit/Editor/Character/DragAndDropWindow.uss");
+                         ("Assets/UiToolkit/Editor/Character/CharacterCreator.uss");
         if (styleSheet != null) root.styleSheets.Add(styleSheet);
 
         //MAIN TITLE
@@ -65,7 +65,7 @@ public class DragAndDropWindow : EditorWindow {
         CreateTabTwoContent(tabTwo);
 
         root.Add(mainTabView);
-    }  
+    }
 
     private void CreateTabOneContent(Tab tabOne) {
         //VISUAL ELEMENT BIG BOX
@@ -399,11 +399,11 @@ public class DragAndDropWindow : EditorWindow {
         newCharacter.tag = "NPC";
 
         List<VisualElement> childrenList = BigSlotSecondTab.Children().ToList();
-        for(int i = 0; i < childrenList.Count(); i++) {
+        for (int i = 0; i < childrenList.Count(); i++) {
             GameObject newPart = new GameObject();
 
             var backgroundImage = childrenList[i].resolvedStyle.backgroundImage;
-            Sprite texture = backgroundImage.sprite;       
+            Sprite texture = backgroundImage.sprite;
 
             SpriteRenderer spriteRenderer = newPart.AddComponent<SpriteRenderer>();
             spriteRenderer.sprite = texture;
@@ -429,7 +429,7 @@ public class DragAndDropWindow : EditorWindow {
 
         NPCController script = newCharacter.AddComponent<NPCController>();
         script.dialogText = _dialog.value;
-        if(_itemInputField.value != null) script.item = _itemInputField.value as GameObject;
+        if (_itemInputField.value != null) script.item = _itemInputField.value as GameObject;
 
         string path = "Assets/Prefabs/Characters/NPC/NewNPC.prefab";
         path = AssetDatabase.GenerateUniqueAssetPath(path);
