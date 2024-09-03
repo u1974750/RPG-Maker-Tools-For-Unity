@@ -14,6 +14,7 @@ public class RoomBuilder : EditorWindow {
     private ScrollView _scrollView;
     private Foldout _foldout;
     private UnityEngine.Object _roomPrefab;
+    private TabView _doorwaysTab;
     [SerializeField] private StyleSheet _styleSheet;
     [SerializeField] private Texture2D _imagePlaceholder;
     [SerializeField] private Texture2D _doorSprite;
@@ -46,10 +47,10 @@ public class RoomBuilder : EditorWindow {
         _scrollView.SetEnabled(true);
         _root.Add(_scrollView);
 
-        //FOLDOUT 1: ROOM PREFAB
+
         //CreateRoomPrefabFoldout();
 
-        // FOLDOUT 2: ROOM TEMPLATE S.O.
+        
         RoomTemplateFoldout();
         Doorways(_scrollView);
         ExampleImages(_scrollView);
@@ -65,40 +66,41 @@ public class RoomBuilder : EditorWindow {
 
         RoomTemplateSO newRoom = ScriptableObject.CreateInstance<RoomTemplateSO>();
         TextField inputName = (TextField)childrenList[0];
-        string path = "Assets/ScriptableObjectAssets/Dungeon/Rooms/" + inputName.value + ".asset"; // change object name!
+        string path = "Assets/ScriptableObjectAssets/Dungeon/Rooms/" + inputName.value + ".asset";
 
         newRoom.prefab = (GameObject)_roomPrefab;
 
-        var roomTypeInput = (PopupField<RoomNodeTypeSO>)childrenList[2];
+        var roomTypeInput = (PopupField<RoomNodeTypeSO>)childrenList[4];
         newRoom.roomNodeType = roomTypeInput.value;
 
-        Vector2IntField lowerBoundInput = (Vector2IntField)childrenList[4];
+        Vector2IntField lowerBoundInput = (Vector2IntField)childrenList[6];
         newRoom.lowerBounds = lowerBoundInput.value;
 
-        Vector2IntField upperBoundInput = (Vector2IntField)childrenList[6];
+        Vector2IntField upperBoundInput = (Vector2IntField)childrenList[8];
         newRoom.upperBounds = upperBoundInput.value;
 
 
-        List<VisualElement> doorwayTabs = childrenList[8].Children().ToList()[0].Children().ToList();
         newRoom.doorwayList = new List<Doorway>();
 
         for (int i = 0; i < 4; i++) {
-            List<VisualElement> doorWay = doorwayTabs[i].Children().ToList();
+            VisualElement doorWay = _doorwaysTab.Children().ToList()[i];
             Doorway newDoorway = new Doorway();
 
-            EnumField doorOrientation = (EnumField)doorWay[0];
+            List<VisualElement> doorChildren = doorWay.Children().ToList();
+
+            EnumField doorOrientation = (EnumField)doorChildren[1];
             newDoorway.orientation = (RoomOrientation)doorOrientation.value;
 
-            Vector2IntField doorPos = (Vector2IntField)doorWay[1];
+            Vector2IntField doorPos = (Vector2IntField)doorChildren[3];
             newDoorway.position = doorPos.value;
 
-            Vector2IntField startCopyPos = (Vector2IntField)doorWay[3];
+            Vector2IntField startCopyPos = (Vector2IntField)doorChildren[5];
             newDoorway.doorwayStartCopyPosition = startCopyPos.value;
 
-            IntegerField tileWidth = (IntegerField)doorWay[4];
+            IntegerField tileWidth = (IntegerField)doorChildren[7];
             newDoorway.doorwayCopyTileWidth = tileWidth.value;
 
-            IntegerField tileHeight = (IntegerField)doorWay[5];
+            IntegerField tileHeight = (IntegerField)doorChildren[9];
             newDoorway.doorwayCopyTileHeight = tileHeight.value;
 
             newRoom.doorwayList.Add(newDoorway);
@@ -172,7 +174,7 @@ public class RoomBuilder : EditorWindow {
         box.Add(DoorwaysTab);
         roomTemplateFoldout.Add(box);
         scrollView.Add(roomTemplateFoldout);
-
+        _doorwaysTab = DoorwaysTab;
     }
 
     private void ExampleImages(ScrollView scrollView) {
@@ -240,14 +242,32 @@ public class RoomBuilder : EditorWindow {
 
     }
 
-    //2. TOGGLE FOR THE ROOM TEMPLATE S.O. DETAILS
     private void RoomTemplateFoldout() {
         Foldout roomTemplateFoldout = new Foldout { text = "1. Room Template", style = { marginRight = 15 } };
 
+        //room name
         TextField roomName = new TextField() { label = "Room Name: ", style = { marginTop = 10 } };
         roomTemplateFoldout.Add(roomName);
 
-        //helpbox
+        //room prefab Help Box
+        HelpBox prefabTutorial = new HelpBox("Select your Room Prefab. This will be used later to create the dungeon layout", HelpBoxMessageType.Info){ style = { marginTop = 10 } };
+        helpBoxes.Add(prefabTutorial);
+        roomTemplateFoldout.Add(prefabTutorial);
+
+        //room prefab
+        ObjectField roomObjectField = new ObjectField();
+        roomObjectField.objectType = typeof(GameObject);
+        roomObjectField.label = "Room Prefab: ";
+        roomObjectField.style.marginTop = 10;
+
+        roomTemplateFoldout.Add(roomObjectField);
+
+        roomObjectField.RegisterCallback<ChangeEvent<UnityEngine.Object>>((evt) => {
+            _roomPrefab = evt.newValue;
+        });
+
+
+        //helpbox room node type
         HelpBox roomNodeTutorial = new HelpBox("Select your room type, this will help use the correct node when creating the level node graph", HelpBoxMessageType.Info) { style = { marginTop = 10 } };
         helpBoxes.Add(roomNodeTutorial);
         roomTemplateFoldout.Add(roomNodeTutorial);
@@ -256,7 +276,6 @@ public class RoomBuilder : EditorWindow {
         RoomNodeTypeListSO roomList = GameResources.Instance.roomNodeTypeList;
         PopupField<RoomNodeTypeSO> popupField = new PopupField<RoomNodeTypeSO>("Room Node Type", roomList.list, 0, null, null) { style = { marginTop = 10 } };
         roomTemplateFoldout.Add(popupField);
-        //TODO: Canviar noms de les variables al editor per tal de ser mes clars
 
         //BOUNDS
         HelpBox lowerBoundsTutorial = new HelpBox("If you imagine a rectangle around the room tilemap that just completely " +
@@ -282,35 +301,6 @@ public class RoomBuilder : EditorWindow {
         _scrollView.Add(roomTemplateFoldout);
 
         _foldout = roomTemplateFoldout;
-    }
-
-    //1. TOGGLE FOR THE ROOM PREFAB
-    private void CreateRoomPrefabFoldout() {
-        Foldout roomPrefabFoldout = new Foldout { text = "1. Create Room Prefab" };
-        HelpBox prefabTutorial = new HelpBox("Select your Room Prefab to visualize it. This prefab will be used later to create the dungeon layout", HelpBoxMessageType.Info);
-        helpBoxes.Add(prefabTutorial);
-        roomPrefabFoldout.Add(prefabTutorial);
-
-        ObjectField roomObjectField = new ObjectField();
-        roomObjectField.objectType = typeof(GameObject);
-        roomObjectField.label = "Room Prefab: ";
-
-        roomPrefabFoldout.Add(roomObjectField);
-
-        Image roomPreview = new Image();
-        //roomPreview.image = _imagePlaceholder;
-        roomPreview.AddToClassList("room-placeholder-image");
-        //roomPreview.style.backgroundImage = Resources.Load<Texture2D>("Resources/placeholder-image.png");
-        roomPrefabFoldout.Add(roomPreview);
-
-        roomObjectField.RegisterCallback<ChangeEvent<UnityEngine.Object>>((evt) => {
-            roomPreview.image = AssetPreview.GetAssetPreview(evt.newValue);
-            roomPreview.RemoveFromClassList("room-placeholder-image");
-            roomPreview.AddToClassList("room-prefab-image");
-            _roomPrefab = evt.newValue;
-        });
-
-        _scrollView.Add(roomPrefabFoldout);
     }
 
     private void TutorialToggle() {

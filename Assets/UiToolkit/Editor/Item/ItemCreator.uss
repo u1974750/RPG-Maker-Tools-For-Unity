@@ -101,7 +101,6 @@ Button:checked{
 }
 
 Button:disabled{
-       background-color: default;
        text-color: #EEEEEE;
        opacity: 1;
 }

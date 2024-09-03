@@ -20,7 +20,6 @@ public class DungeonLevelSO : ScriptableObject {
     #region Validation
 #if UNITY_EDITOR
 
-    //COMPROVA QUE ELS ELEMENTS ESTIGUIN ENTRATS CORRECTAMENT AL SO
     private void OnValidate() {
         HelperUtilities.ValidateCheckEmptyString(this, nameof(levelName), levelName);
         if (HelperUtilities.ValidateCheckEnumerableValues(this, nameof(roomTemplateList), roomTemplateList))
@@ -28,7 +27,6 @@ public class DungeonLevelSO : ScriptableObject {
         if (HelperUtilities.ValidateCheckEnumerableValues(this, nameof(roomNodeGraphList), roomNodeGraphList))
             return;
 
-        //valida que els room templates estiguin especificats
 
         //coirridors
         bool isHorizontalCorridor = false;
@@ -43,16 +41,13 @@ public class DungeonLevelSO : ScriptableObject {
         }
 
         if (isHorizontalCorridor == false) {
-            //MISSATGE ERROR FALTA HORIZONTAL CORRIDOR!!!
-            Debug.LogWarning("FALTA PASSADIS HORITZONTAL");
+            Debug.LogWarning("Horizontal Corridor Missing!");
         }
         if (isVerticalCorridor == false) {
-            //MISSATGE ERROR FALTA VERTICAL CORRIDOR!!! 
-            Debug.LogWarning("FALTA PASSADIS VERTICAL");
+            Debug.LogWarning("Vertical Corridor Missing!");
         }
         if (isEntrance == false) {
-            //MISSATGE ERROR FALTA ENTRANCE !!! 
-            Debug.LogWarning("FALTA ENTRADA ");
+            Debug.LogWarning("Entrance Missing! ");
         }
 
         foreach (RoomNodeGraphSO roomNodeGraph in roomNodeGraphList) {

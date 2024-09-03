@@ -70,6 +70,11 @@ public class PlayerMovement : MonoBehaviour {
                 currentStats.speedValue -= modifiedStats.speedValue;
                 currentStats.strenghtValue -= modifiedStats.strenghtValue;
 
+                if(modifiedStats.healthValue != 0) {
+                    _canvas.GetComponent<CanvasController>().ModifyHealthUI(-modifiedStats.healthValue);
+                }
+
+
             }
         }
     }

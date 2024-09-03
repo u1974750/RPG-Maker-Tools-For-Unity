@@ -23,11 +23,19 @@ public class CanvasController : MonoBehaviour {
     }
 
     public void RemoveLife(int num) {
-        _maxLife -= num;
-        for (int i = num; i < 0; i++) {
-            if (_hearts[_life - 1] != null) {
-                _hearts[_life - 1].GetComponent<Image>().color = Color.gray;
-                _life--;
+        _maxLife += num;
+        _life += num;
+
+        int done = num;
+        for(int i = _maxLife +1; i  >= 0; i--) {
+            if (_hearts[i].activeSelf) {
+                if (done < 0) {
+                    _hearts[i].SetActive(false);
+                    done++;
+
+                    GameObject aux = gameObject.transform.GetChild(0).gameObject;
+                    aux.GetComponent<RectTransform>().sizeDelta = new Vector2(_hearts[i].GetComponent<RectTransform>().anchoredPosition.x + 10, 64.5f);
+                }
             }
         }
     }
